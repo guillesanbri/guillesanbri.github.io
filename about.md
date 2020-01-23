@@ -4,12 +4,17 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
+### The page
 
-### More Information
+This page aims to collect some of my personal projects, mainly about virtual and augmented reality, programming and some other things. My objective is to provide information about procedures and concepts in order to give something back to the internet in exchange for everything it has offered me. 
 
-A place to include any other types of information that you'd like to include about yourself.
+I will be posting here in a non-perfect English.
 
-### Contact me
+### Me
 
-[email@domain.com](mailto:email@domain.com)
+My name is Guillermo, I am a 21 years old student about to finish a degree in Industrial Electronics and Automation Engineering at Valladolid’s University in Spain. 
+
+### Contact
+
+You can contact me here:
+[GSBrread@Twitter](https://twitter.com/GSBrread)
