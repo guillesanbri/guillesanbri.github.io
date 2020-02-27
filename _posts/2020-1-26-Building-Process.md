@@ -2,6 +2,7 @@
 layout: post
 title: Building process
 categories: AR
+folder: building-process
 ---
 ***
 

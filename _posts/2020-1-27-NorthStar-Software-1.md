@@ -2,6 +2,7 @@
 layout: post
 title: "NorthStar software 1: Basic Intel T265 Integration"
 categories: [AR, Unity3D]
+folder: NS-Software-1
 ---
 
 ***
