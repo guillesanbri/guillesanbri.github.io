@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Building process
+categories: AR
 ---
 ***
 

@@ -1,0 +1,240 @@
+I"g6<hr />
+
+<p>Once we have the optics, electronics, mechanical parts, and all the 3D-printed parts, we are ready to start building the headset.
+To do so, we will follow the <a href="https://github.com/leapmotion/ProjectNorthStar/blob/master/Mechanical/Assm%20Drawing%20North%20Star%20Release%203.pdf">Assembly drawing from the NortStar repo</a>.</p>
+
+<hr />
+
+<h1 id="230-000-and-240-000---left-and-right-brake">230-000 and 240-000 - Left and Right Brake</h1>
+
+<p>If we take a look at the first page with instructions starting from the end of the document, we will find the 230-000 instructions.</p>
+
+<p><img src="./../images/building-process/IMG_20200119_114142.jpg" alt="230-000 and 240-000 pieces" /></p>
+
+<p>These parts were updated not long ago, so if you have downloaded them recently, you should be missing the two cable-guides on the top of the picture above and have a reinforced version of 230-001/240-001.</p>
+
+<p><img src="./../images/building-process/IMG_20200125_183333.jpg" alt="Reinforced piece" /></p>
+
+<p>When assembling this parts, take into account that even if the assembly drawing doesn’t show it, you have to put the welding headgear between the hinge parts.</p>
+
+<p><img src="./../images/building-process/IMG_20200119_114613.jpg" alt="Welding headgear assembly" /></p>
+
+<p>To put the spring in place, you will have to turn it 180 degrees loading it, this can be easily done putting the spring in place in both parts and turning around one of them.</p>
+
+<p><img src="./../images/building-process/IMG_20200119_133026.jpg" alt="Spring in place" /></p>
+
+<hr />
+
+<h1 id="210-000---padded-forehead">210-000 - Padded Forehead</h1>
+
+<p><img src="./../images/building-process/IMG_20200119_124042.jpg" alt="210-000 pieces" /></p>
+
+<p>First, we need to bend the forehead headgear span, to do this, it’s recommended to turn the heated bed of your 3D printer to 70 °C, which is enough to shape the part, if you don’t have access to a heated bed, don’t worry, other options are:</p>
+
+<ul>
+  <li>Using a Heat Gun.</li>
+  <li>Using hot water.</li>
+  <li>Anything that gets the piece to ~70 °C.</li>
+</ul>
+
+<p>You can now shape the piece with a mannequin head or your own head if you cover your skin to avoid first degree burns (not really, just be careful). <a href="https://www.youtube.com/watch?v=FLRj4_IuamE">Demo video by Florian Maurer.</a></p>
+
+<p>Once we have the piece bent, it’s time to wrap up the foam, to do so, I did this, <strong>I’m not 100% sure this is the best/correct way to do it</strong>, but it worked out fine for me. Take into account that the felt-like side is the smoothest one and should be the one in contact with your forehead.</p>
+
+<p><img src="./../images/building-process/IMG_20200119_124300.jpg" alt="Foam step 1" />
+<img src="./../images/building-process/IMG_20200119_124514.jpg" alt="Foam step 2" />
+<img src="./../images/building-process/IMG_20200119_124548.jpg" alt="Foam step 3" /></p>
+
+<p>Now, let’s put the hinges in place, again, remember to put pieces 230-000 and 240-000 between the two pieces of each hinge. I found it easier to lock in place the hinge base (shown in the picture below) and screw the cap on top.</p>
+
+<p><img src="./../images/building-process/IMG_20200119_125106.jpg" alt="First hinge part" /></p>
+
+<hr />
+
+<h1 id="200-000---headgear">200-000 - Headgear</h1>
+
+<p>You should have now the headgear assembled, just like the pictures below, with <strong>two differences</strong>, the <strong>reinforced parts</strong> and the <strong>absence of the cable guides</strong>.</p>
+
+<p><img src="./../images/building-process/IMG_20200119_133901.jpg" alt="Finished headgear 1" />
+<img src="./../images/building-process/IMG_20200119_133849.jpg" alt="Finished headgear 2" /></p>
+
+<hr />
+
+<h1 id="131-000-simplified-electronics-bay">131-000 Simplified Electronics Bay</h1>
+
+<p><img src="./../images/building-process/IMG_20200119_134530.jpg" alt="131-000 pieces" /></p>
+
+<p>You can either do 131-000 or 121-000, both assemblies are similar, I chose the simplified one.</p>
+
+<p>First, join 131-001 and 131-002, as easy as pie.</p>
+
+<p><img src="./../images/building-process/IMG_20200119_134654.jpg" alt="131-001 plus 131-002" /></p>
+
+<p>Then, grab a soldering iron to insert the heat inserts as shown.</p>
+
+<p><img src="./../images/building-process/IMG_20200119_135034.jpg" alt="Soldering iron" /></p>
+
+<p>It should end up like this.</p>
+
+<p><img src="./../images/building-process/IMG_20200119_135258.jpg" alt="Heat inserts" /></p>
+
+<p>Finally, attach the driver board and go to the next step!</p>
+
+<p><img src="./../images/building-process/IMG_20200119_135419.jpg" alt="Completed assembly" /></p>
+
+<hr />
+
+<h1 id="120-000---halo-electronics-module">120-000 - Halo Electronics Module</h1>
+
+<p>This build is the 3.1 version, so we don’t need this part.</p>
+
+<hr />
+
+<h1 id="113-000-114-000---rot-slide-mount">113-000 114-000 - Rot. Slide Mount</h1>
+
+<p><img src="./../images/building-process/IMG_20200119_135745.jpg" alt="113-000 and 114-00 pieces" /></p>
+
+<p><strong>Spoiler: You will probably want to dissasemble the left one (113-000) in a few steps, so don’t waste time screwing now.</strong></p>
+
+<p>You will need to take out the endcaps later to assemble everything together, so don’t worry about them now.</p>
+
+<p>Again, this pieces have been updated, the endcap (now 110-006) looks like this:</p>
+
+<p><img src="./../images/building-process/Cura-110-006.jpg" alt="Updated endcap" /></p>
+
+<p>And pieces 113-001 and 114-001 are now divided in 113-001, 113-002, 114-001 and 114-002.</p>
+
+<p><img src="./../images/building-process/Cura-113-114.jpg" alt="Updated slide mounts" /></p>
+
+<hr />
+
+<h1 id="111-000-112-000---displays">111-000 112-000 - Displays</h1>
+
+<p><img src="./../images/building-process/IMG_20200119_142820.jpg" alt="111-000 and 112-000 pieces" /></p>
+
+<p>You can choose between 25cm and 75cm of focal distance, simply put, the difference between them is the distance at which the objects will appear to be. If you don’t know which one to use, (as a personal recommendation), build the 25cm one, as far as I know, it is the most used one.</p>
+
+<p>First, using the soldering iron like before, let’s do the heated inserts, four in each tray.</p>
+
+<p><img src="./../images/building-process/IMG_20200119_143605.jpg" alt="Heated inserts" /></p>
+
+<p>The following part is probably (at least for me) the most difficult one, you have to peel the ribbon cable from the back of the displays <strong>very carefully</strong>. Some people have preheated a little bit the ribbon so it comes off easier, I did mine without applying heat, <strong>very carefully</strong>, like taking a sticker off, slowly. I helped myself with a phone-screen removing tool - guitar pick - plastic thing. Something like this that turned out very helpful:</p>
+
+<p><img src="./../images/building-process/Plastic-pick.jpg" alt="Plastic pick tool" /></p>
+
+<p>One last time, be very careful doing this, it’s totally doable at the first attempt, but the last thing you want is to tear the ribbon off.</p>
+
+<p>Once the ribbons are ready, they should look like this:</p>
+
+<p><img src="./../images/building-process/IMG_20200119_165826.jpg" alt="Screen ribbon" /></p>
+
+<p>Now, remember to remove the supports from the screen trays and then slide both screen inside.</p>
+
+<p><img src="./../images/building-process/IMG_20200119_170617.jpg" alt="Screen ribbon" /></p>
+
+<hr />
+
+<h1 id="130-000---simplified-optics-module">130-000 - Simplified Optics Module</h1>
+
+<p><img src="./../images/building-process/IMG_20200119_171405.jpg" alt="130-000 pieces" /></p>
+
+<p>Explanation time! There are more pieces than necessary in the picture above, 120-002 (Halo lid) works if you just want 3 dof in your headset, however, there is a modular lid that can be assembled from pieces 130-003, 130-004, 130-005 and 130-006. I <strong>strongly</strong> recommend to use the modular lid instead of the Halo one, even if you don’t plan to incorporate 6 dof.</p>
+
+<p>If you want to go 6 dof, the modular lid will allow you to use the MultiMount or the Vive Tracker pieces.</p>
+
+<ul>
+  <li>The MultiMount is a piece that (as far as I know) Noazark uploaded to the <a href="https://discordapp.com/invite/ATPm9Fy">NorthStar discord server</a> that allows you to add an Intel T265 or a Occipital Structure Core sensor to the headset. The .stl file is pinned in the channel #build-tweaking of the server.</li>
+  <li>If you want to use a Vive Tracker, you can find the piece in the <a href="https://github.com/leapmotion/ProjectNorthStar/tree/master/Mechanical/">North Star mechanical folder in the repo</a>.</li>
+</ul>
+
+<p>Let’s continue with the build now, if you have decided to go with the modular lid (wise decision), you will have to do four heated inserts in the Simplified Optics Main Body.</p>
+
+<p><img src="./../images/building-process/IMG_20200119_171900.jpg" alt="Inserts in main body" /></p>
+
+<p>Next, let’s attach parts 113-000 and 114-000 (Rot. Slide Mounts) to the main body.</p>
+
+<p><img src="./../images/building-process/IMG_20200119_173102.jpg" alt="113-000 and 114-000 main body connection" /></p>
+
+<p>Then, screw the Simplifies Electronics Bay to the main body. After that, you have to connect the power cables of the driver, make sure to connect the red wire to the pin that has a positive sign above. It should look like this:</p>
+
+<p><img src="./../images/building-process/IMG_20200119_173231.jpg" alt="Power cables" /></p>
+
+<p>Now it’s time to place the screen ribbons, you want to avoid as much as possible creasing the ribbons, I set mine this way, <strong>it may not be the perfect way to do it</strong>, but I am happy with the result. You can use a little bit of double sided tape to keep the cables away from the screens.</p>
+
+<p><img src="./../images/building-process/IMG_20200119_234609.jpg" alt="Ribbons placing 1" />
+<img src="./../images/building-process/IMG_20200119_234617.jpg" alt="Ribbons placing 2" /></p>
+
+<p>If you plug the USB extension cord now, you should have something pretty much like this:</p>
+
+<p><img src="./../images/building-process/IMG_20200119_235613.jpg" alt="Almost finished headset" /></p>
+
+<p>So… Do you remember a few lines ago when I said that you would probably want to disassemble the left Rot. Slide Mount? Here it comes.</p>
+
+<p>Again, in the <a href="https://discordapp.com/invite/ATPm9Fy">NorthStar discord server</a>, Noazark posted a very cool USB housing to keep the power adapter and the extension cord together. You can find two files called USBHousing2T.stl and USBHousing2B.stl pinned in the #3d-printing channel.</p>
+
+<p><img src="./../images/building-process/IMG_20200120_121938.jpg" alt="USB Housing parts" /></p>
+
+<p>We can now screw it on top of the Left Slide Mount:</p>
+
+<p><img src="./../images/building-process/IMG_20200120_122925.jpg" alt="USB Housing housing a USB" /></p>
+
+<p>Let’s continue with the mini DisplayPort cable, once this is connected, you can screw pieces 130-005 and 130-006 in place (from the modular lid).</p>
+
+<p><img src="./../images/building-process/IMG_20200124_212535.jpg" alt="130-005 and 130-006 in place" /></p>
+
+<p>You can get the LeapMotion and the 6 dof solution cables under these pieces too, I decided not to do so as I want the sensors to be interchangeable.</p>
+
+<p>Then, screw 130-004 in place (or the MultiMount/Vive Tracker piece if that is what you decide to go with), and then put 130-003 on top to finish the modular lid assembly.</p>
+
+<p><img src="./../images/building-process/IMG_20200124_213720.jpg" alt="Modular lid assembly" /></p>
+
+<p>We will finish this part by placing the reflectors, if they don’t go in easily, sand the 3d printed part a bit, don’t force the reflectors.</p>
+
+<p><img src="./../images/building-process/IMG_20200124_230952.jpg" alt="Reflectors" /></p>
+
+<hr />
+
+<h1 id="110-000---hinged-optics-bracket">110-000 - Hinged Optics Bracket</h1>
+
+<p>This is part of the 3.0 version, so I won’t be covering this.</p>
+
+<hr />
+
+<h1 id="100-000---optics">100-000 - Optics</h1>
+
+<p>The only thing we have left is to place the Facial Interface (115-002 in the .stl folder), it’s recommended to wrap it in foam/fabric for extra comfort.</p>
+
+<p><img src="./../images/building-process/IMG_20200126_130152.jpg" alt="115-002 and foam rectangle" /></p>
+
+<p>I used the foam piece left from the <a href="https://www.smart-prototyping.com/AR-VR-MR-XR">Smart prototyping</a> kit by cutting it to size and using a stripe of double sided tape.</p>
+
+<p><img src="./../images/building-process/IMG_20200126_131538.jpg" alt="115-002 completed" /></p>
+
+<p>Screw it in place and you are ready to go.</p>
+
+<hr />
+
+<h1 id="000-000-north-star-release-31">000-000 North Star Release 3.1</h1>
+
+<p>Last but not least, we have to join the Optics and the Headgear Assemblies, once you do this, screw the endcaps.</p>
+
+<h2 id="congratulations-you-should-have-a-functional-northstar-headset">Congratulations, you should have a functional NorthStar headset!</h2>
+
+<p><img src="./../images/building-process/IMG_20200126_140403.jpg" alt="Headset assembled" /></p>
+
+<hr />
+
+<p>Thanks to everyone in the Discord server for the help, specially <a href="https://twitter.com/noazark">Noazark</a> and <a href="https://twitter.com/BryanChrisBrown">Bryan</a> (go follow them if you are not doing it already) for everything they do for the NorthStar community. Also LeapMotion (Now Ultraleap) for releasing the NorthStar project to the world.</p>
+
+<hr />
+
+<p>Related links</p>
+<ul>
+  <li><a href="https://youtu.be/J-OowCNcR8A">Headset assembly video by supertask_jp @ Twitter</a></li>
+  <li><a href="https://discordapp.com/invite/ATPm9Fy">Discord server</a></li>
+  <li><a href="https://github.com/leapmotion/ProjectNorthStar/tree/master/Mechanical/">Github repo (Mechanical)</a></li>
+  <li><a href="https://www.smart-prototyping.com/AR-VR-MR-XR">Smart prototyping</a></li>
+</ul>
+
+<hr />
+:ET
