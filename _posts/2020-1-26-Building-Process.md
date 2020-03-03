@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Building process
+title: Project North Star Building process
 categories: AR
 folder: building-process
 ---
