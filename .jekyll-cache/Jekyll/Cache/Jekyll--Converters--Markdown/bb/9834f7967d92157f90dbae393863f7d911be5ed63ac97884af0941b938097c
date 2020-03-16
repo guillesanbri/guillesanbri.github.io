@@ -1,0 +1,120 @@
+I"�<hr />
+
+<iframe src="https://gfycat.com/ifr/FirsthandEvergreenHarpyeagle" frameborder="0" scrolling="no" allowfullscreen="" width="640" height="404"></iframe>
+<p> <a href="https://gfycat.com/firsthandevergreenharpyeagle">via Gfycat</a></p>
+
+<div style="position:relative; padding-bottom:calc(56.25% + 44px)"><iframe src="https://gfycat.com/ifr/FirsthandEvergreenHarpyeagle" frameborder="0" scrolling="no" width="100%" height="100%" style="position:absolute;top:0;left:0;" allowfullscreen=""></iframe></div>
+<p> <a href="https://gfycat.com/firsthandevergreenharpyeagle">via Gfycat</a></p>
+
+<p>If you just want to read how to do the unity integration, jump to <a href="#UnityIntegration">Unity Integration</a></p>
+
+<hr />
+
+<h1 id="terms">Terms</h1>
+
+<ul>
+  <li>Pose: Combination of a position and an orientation.</li>
+  <li>Depth: Estimation of the distance between the user and the environment (Points).</li>
+  <li>Inside-out tracking: Spatial tracking method based on the cameras/sensors being on the tracked device.</li>
+</ul>
+
+<hr />
+
+<h1 id="spatial-tracking">Spatial Tracking</h1>
+
+<p>If you haven’t done any modifications to your NorthStar headset, you have a 0 degrees of freedom (dof) device, this means it won’t take into account any movement you do, everything is “fixed” to the world coordinate system, even your headset. If you place a cube in front of you and turn your head in any of the three axis (pitch, roll, yaw), the cube will follow your movements. Same thing happens if you move along any of the three axis (forward-back, up-down, left-right).</p>
+
+<p><img src="./../images/NS-software-1/6DOF_en.jpg" alt="Six degrees of freedom" /></p>
+
+<p>We can upgrade our headset to have 6 dof, if we do this, our headset will move relative to the world coordinate system, allowing us to move around everything situated in both the real and virtual world (We can now fix objects in real-world positions and they will stay there!).</p>
+
+<hr />
+
+<h1 id="solutions">Solutions</h1>
+
+<p>There are a few options to track the headset in space, some of them (the most used ones) are:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>  <strong>Devices</strong>   </th>
+      <th style="text-align: center">   <strong>Pose</strong>   </th>
+      <th style="text-align: center">  <strong>Inside-out tracking</strong>  </th>
+      <th style="text-align: center">  <strong>Depth</strong>  </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Intel Realsense T265</td>
+      <td style="text-align: center">Yes</td>
+      <td style="text-align: center">Yes</td>
+      <td style="text-align: center">No*</td>
+    </tr>
+    <tr>
+      <td>Occipital Structure Core</td>
+      <td style="text-align: center">Yes</td>
+      <td style="text-align: center">Yes</td>
+      <td style="text-align: center">Yes</td>
+    </tr>
+    <tr>
+      <td>Vive tracker</td>
+      <td style="text-align: center">Yes</td>
+      <td style="text-align: center">No**</td>
+      <td style="text-align: center">No</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>*While not oficially supported, the <a href="https://www.intelrealsense.com/tracking-camera-t265/">Intel page</a> states that it is possible to compute a suboptimal dense depth. This is left as an exercise for the reader.</p>
+
+<p>**To use a Vive tracker, you must have a Lighthouse system.</p>
+
+<p>I decided to use an Intel Realsense T265 device, mainly because of it’s price and my needs, so that is what we will be integrating in Unity next.</p>
+
+<hr />
+
+<h1 id="unity-integration"><a name="UnityIntegration"></a>Unity Integration</h1>
+
+<p>The first thing you want to do is go to the <a href="https://github.com/IntelRealSense/librealsense/tree/master/wrappers/unity">Intel Realsense Unity Wrapper github page</a> and then download the <a href="https://github.com/IntelRealSense/librealsense/releases/download/v2.20.0/realsense.unitypackage">realsense.unitypackage</a>.</p>
+
+<p>Once you have downloaded it, drag and drop it into your <a href="https://github.com/leapmotion/ProjectNorthStar/tree/master/Software">NorthStar Unity project</a>.</p>
+
+<p>Your hierarchy should look like this:</p>
+
+<p><img src="./../images/NS-software-1/base_hierarchy.jpg" alt="Clean project" /></p>
+
+<p>Navigate through your project folders <strong>Assets -&gt; RealSenseSDK2.0 -&gt; Prefabs</strong> and drag and drop the <strong>RsDevice</strong> prefab in your hierarchy.</p>
+
+<p><img src="./../images/NS-software-1/RsDevice.jpg" alt="RsDevice prefab" /></p>
+
+<p>Once you have the RsDevice gameobject in your hierarchy, click it and look at the inspector, it should have three profiles by default:</p>
+
+<p><img src="./../images/NS-software-1/RsDevice3Profiles.jpg" alt="RsDevice three profiles" /></p>
+
+<p>Change it to one, then, set the <strong>Stream</strong> variable to <strong>Pose</strong>,the <strong>Format</strong> to <strong>Six DOF</strong> and <strong>Framerate</strong>,<strong>Stream Index</strong>,<strong>Width</strong> and <strong>Height</strong> to zero.</p>
+
+<p><img src="./../images/NS-software-1/RsDevice1Profile.jpg" alt="RsDevice pose profile" /></p>
+
+<p>Now, navigate to <strong>ARCameraRig -&gt; Leap Odometry Origin</strong> in your hierarchy, click <strong>Add Component</strong> and look for <strong>Rs Pose Stream Transformer</strong></p>
+
+<p><img src="./../images/NS-software-1/AddComponent.jpg" alt="Add Pose Stream to Leap Odometry" /></p>
+
+<p>Drag and drop your <strong>RsDevice</strong> in the <strong>Source</strong> variable of the <strong>Rs Pose Stream Transformer</strong> you just added.</p>
+
+<p><img src="./../images/NS-software-1/SourceVariable.jpg" alt="RsDevice to source variable" /></p>
+
+<p>Now you can add a cube to your scene, scale it down a bit, place it in front of the headset and hit play, and you should be able to move around the cube!</p>
+
+<hr />
+
+<p>Related links</p>
+<ul>
+  <li><a href="https://www.intelrealsense.com/">Intel Realsense</a></li>
+  <li><a href="https://structure.io/structure-core">Occipital Structure Core</a></li>
+  <li><a href="https://www.vive.com/us/vive-tracker/">Vive trackers</a></li>
+  <li><a href="https://github.com/leapmotion/ProjectNorthStar/tree/master/Software">Github repo (Software)</a></li>
+  <li><a href="https://discordapp.com/invite/ATPm9Fy">Discord server</a></li>
+</ul>
+
+<hr />
+:ET
