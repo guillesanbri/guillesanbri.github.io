@@ -1,16 +1,16 @@
 
-.highlight {
-  background-color: #efefef;
+/* https://stackoverflow.com/questions/55305080/jekyll-rouge-highlighted-code-blocks-nested */
+pre.highlight {
+  background-color: #242424;
+  color: #F9F5DD;
   padding: 7px 7px 7px 10px;
-  border: 1px solid #ddd;
-  -moz-box-shadow: 3px 3px rgba(0,0,0,0.1);
-  -webkit-box-shadow: 3px 3px rgba(0,0,0,0.1);
-  box-shadow: 3px 3px rgba(0,0,0,0.1);
+  border: 1px solid #4183C4;
   margin: 20px 0 20px 0;
-  overflow: scroll;
+  overflow: auto;
 }
 
 code {
+  font-size:85%;
   font-family:'Bitstream Vera Sans Mono','Courier', monospace;
 }
 
