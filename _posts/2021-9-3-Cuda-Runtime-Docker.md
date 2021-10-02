@@ -273,14 +273,14 @@ If we wanted to create a container of the previously built image, we could simpl
 There are a few flags in this command:
 
 - **`--gpu alls`**: This will assign all available GPUs to the Docker container. If you want to specify a GPU, you can use the [device parameter.](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/user-guide.html)
-- **`--rm`**: The rm flag cleans up the container and removes its filesystem after exiting. This means that changes inside the container will dissapear (ie. a module installed with pip using the container terminal). Files changed in the binded directory **won't** be affected.
+- **`--rm`**: The rm flag cleans up the container and removes its filesystem after exiting. This means that changes inside the container will disappear (ie. a module installed with pip using the container terminal). Files changed in the binded directory **won't** be affected.
 - **`--it`**: Starts the container in interactive mode (now you can interact with /bin/bash of the container).
 - **`--name ${1}_container`**: Simply assigns the name tag_container to the container for easier reference, where tag is the name given to the image using the `--tag` flag in the build command.
 - **`-v $(pwd):/workspace`**: Gets the directory you ran the command from and binds it to the WORKDIR defined in the Dockerfile. There are multiple storage options, all of them defined with the -v flag. You can learn more about them [here](https://docs.docker.com/storage/). For example, volumes (another type of mount) are the best option for persistent storage, but since what we want is to access a directory with our development artifacts and data, bind mounts are preferred to mount the directory where the project code and dataset are located. This way, the same image can be used for different projects simply by invoking docker-run.sh from another directory. 
 - **`-p 8888:8888`**: Use this to map a port from the container to a port in your computer. [More info on networking](https://docs.docker.com/config/containers/container-networking/). In this case, if we were going to serve a jupyter notebook, it would be served on port 8888 **of the container**, so you wouldn't be able to access it through your web browser if you don't map the container port to your pc port.
 
 
-You have probably noticed that I have skipped two flags: **`-v /tmp/.X11-unix:/tmp/.X11-unix`** and **`-e DISPLAY`**. What these flags do is allow you to run GUI apps inside a Docker container and display it on your screen. This is neccesary to use some OpenCV GUI methods such as *imshow()*. If you are not planning on using OpenCV or its graphical interfaces, you can ignore these flags when using the run command. 
+You have probably noticed that I have skipped two flags: **`-v /tmp/.X11-unix:/tmp/.X11-unix`** and **`-e DISPLAY`**. What these flags do is allow you to run GUI apps inside a Docker container and display it on your screen. This is necessary to use some OpenCV GUI methods such as *imshow()*. If you are not planning on using OpenCV or its graphical interfaces, you can ignore these flags when using the run command. 
 
 ### Commands
 
