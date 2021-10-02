@@ -6,7 +6,7 @@
 name: Guillesanbri
 
 # Short bio or description (displayed in the header)
-description: Personal blog page
+description: Guillermo Sanchez Brizuela personal blog page
 
 # URL of your avatar or profile pic (you could use your GitHub profile pic)
 avatar: https://avatars3.githubusercontent.com/guillesanbri
@@ -34,7 +34,7 @@ google_analytics: UA-159274268-1
 
 # Your website URL (e.g. http://barryclark.github.io or http://www.barryclark.co)
 # Used for Sitemap.xml and your RSS feed
-url:
+url: https://guillesanbri.github.io/
 
 #
 # !! You don't need to change any of the configuration flags below !!
