@@ -135,7 +135,7 @@ sudo systemctl enable containerd.service
 
 Now it's time to install the NVIDIA Container Toolkit. As shown in the picture above, this piece of software will wrap your Docker engine installation, mapping the CUDA primitives from the CUDA toolkit inside the container (each one of the cubes in the upper part of the image) to the NVIDIA GPU driver in your host (your computer). This means that you will only have to keep your GPU drivers updated.
 
-As with the Docker installation, the original instructions from NVIDIA are available [here](# https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker), but a quick summary follows:
+As with the Docker installation, the original instructions from NVIDIA are available [here](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker), but a quick summary follows:
 
 - Setup the repository and copy its GPG key:
 
