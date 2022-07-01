@@ -3,7 +3,7 @@ layout: default
 ---
 
 <article class="post">
-  <h1>{{ page.title }}</h1>
+  <h1>{{ page.title }}</h1><br>
   
   <div class="post-categories" align=right>
   {% if post %}
@@ -13,8 +13,7 @@ layout: default
   {% endif %}
   <b>Categories:&nbsp;&nbsp;</b>
   {% for category in categories %}
-    <a href="{{site.baseurl}}/categories/#{{category|slugize}}">{{category}}</a>
-    {% unless forloop.last %},&nbsp;{% endunless %}
+    <a href="{{site.baseurl}}/categories/#{{ category | replace: ' ', '-' }}" class="chip chip-primary">{{category}}</a>
   {% endfor %}
   </div>
 
