@@ -4,17 +4,46 @@ layout: default
 
 <div class="posts">
   {% for post in site.posts %}
-    <article class="post">
-      <hr>
-      <a href="{{ site.baseurl }}{{ post.url }}"><img src="images/{{post.folder}}/index.png" alt="Index photo">  </a>
-      <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
-      <!--
-      <div class="entry">
-        {{ post.excerpt }}
+    {% if post.pinned %}
+      <div class="post-card">
+        <article class="post">
+            <a href="{{ site.baseurl }}{{ post.url }}">
+              <img src="images/{{post.folder}}/index.png" style="border-radius: 0.5rem" alt="Index photo">
+            </a>
+            <h1>
+              <a href="{{ site.baseurl }}{{ post.url }}">📌 {{ post.title }}</a>
+            </h1>
+            <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
+            <br>
+            <div align="right">
+              {% for cat in post.categories %}
+              <a href="{{ site.baseurl }}/categories/#{{ cat | replace: ' ', '-' }}" class="chip chip-primary">{{ cat }}</a>
+              {% endfor %}
+            </div>
+        </article>
       </div>
-      -->
-      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
-    </article>
+    {% endif %}
+  {% endfor %}
+  {% for post in site.posts %}
+    {% unless post.pinned %}
+      <div class="post-card">
+          <article class="post">
+              <a href="{{ site.baseurl }}{{ post.url }}">
+                <img src="images/{{post.folder}}/index.png" style="border-radius: 0.5rem" alt="Index photo">
+              </a>
+              <h1>
+                <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+              </h1>
+              <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
+              <br>
+              <div align="right">
+                {% for cat in post.categories %}
+                <a href="{{ site.baseurl }}/categories/#{{ cat | replace: ' ', '-' }}" class="chip chip-primary">{{ cat }}</a>
+                {% endfor %}
+              </div>
+          </article>
+        </div>
+    {% endunless %}
   {% endfor %}
   <br>
   <b>Welcome to my personal page, I hope you find something interesting in here!</b>

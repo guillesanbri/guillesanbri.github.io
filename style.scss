@@ -18,7 +18,7 @@ html {
 }
 
 body {
-	background: $white;
+	background: #FAFAFA;
   font: 18px/1.4 $helvetica;
   color: $darkGray;
 }
@@ -35,8 +35,8 @@ h1, h2, h3, h4, h5, h6 {
   color: $darkerGray;
   font-weight: bold;
 
-  line-height: 1.7;
-  margin: 1em 0 15px;
+  line-height: 1.5;
+  margin: 1px 0 1px;
   padding: 0;
 
   @include mobile {
@@ -45,7 +45,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 30px;
+  font-size: 26px;
   a {
     color: inherit;
   }
@@ -151,7 +151,7 @@ img {
 //
 
 .wrapper-masthead {
-  margin-bottom: 50px;
+  margin-bottom: 25px;
 }
 
 .masthead {
@@ -281,6 +281,30 @@ nav {
 footer {
   padding: 20px 0;
   text-align: center;
+}
+
+.chip{
+  padding: 8px 10px;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 12px;
+  box-shadow: 0 2px 5px rgba(0,0,0,.25);
+  margin: 0 1px;
+  
+  cursor: pointer;
+}
+
+.chip-primary{
+  background: #232323;
+  color: whitesmoke;
+}
+
+.post-card{
+  background: #FFFFFF; 
+  margin-bottom: 1rem; 
+  padding: 1rem; 
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; 
+  border-radius: 0.5rem;
 }
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
