@@ -42,7 +42,7 @@ This should be a short post, but you can jump straight to the proof clicking [he
 Before going into the mathematical detail the meaning of scale invariance should be explained. Monocular Depth Estimation (recovering the three-dimensional information lost when projecting a 3D scene such as the real world into a 2D space such as an image) is an ill posed problem. This means that it has infinite geometrical solutions, as an infinite number of scenes can be projected in the same 2D representation given that a relation between their distance and their scale exists. An example of this problem can be seen below, where the two cubes produce the same image, even though their scale is different.
 
 <figure align="center">
-  <img src="./../images/scale-invariant-loss/index.png" alt="Perspective projection of two cubes of different size."/>
+  <img src="./../images/scale-invariant-loss/projection.png" alt="Perspective projection of two cubes of different size."/>
 </figure>
 
 What a scale invariant loss function does is calculate an error magnitude that does not take into account the scale discrepancy between the ground truth annotation and the output predicted by our model. It only considers the relative depth of each set of values.
