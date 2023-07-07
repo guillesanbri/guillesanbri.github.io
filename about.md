@@ -12,7 +12,7 @@ Posts here will be written in non-perfect English.
 
 ### Me
 
-My name is Guillermo and I am a 23 years old Industrial Electronics and Automation Engineer with a Computer Science Master's degree. I am currently working as a research fellow in the Medical Robotics group of ITAP, a research institute of the University of Valladolid (🇪🇸) doing Data Analysis, Computer Vision, and Augmented Reality stuff.
+My name is Guillermo, I studied Industrial Electronics and Automation Engineering and then diverted into a Computer Science Master's degree focused on Computer Vision and Deep Learning in general. I am currently working as a Research ML Engineer at [Unify](https://unify.ai/) building bridges between all ML and DL infrastructure 🚀
 
 ### Contact
 
