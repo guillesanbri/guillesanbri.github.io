@@ -19,7 +19,7 @@ avatar: https://avatars3.githubusercontent.com/guillesanbri
 footer-links:
   email:
   github: guillesanbri
-  linkedin: guillermo-sanchez-brizuela
+  linkedin: guillesanbri
   rss: # just type anything here for a working RSS icon
   twitter: GSBrread
   youtube: # channel/<your_long_string> or user/<user-name>
@@ -34,7 +34,7 @@ google_analytics: UA-159274268-1
 
 # Your website URL (e.g. http://barryclark.github.io or http://www.barryclark.co)
 # Used for Sitemap.xml and your RSS feed
-url: https://guillesanbri.github.io/
+url: https://guillesanbri.com/
 
 #
 # !! You don't need to change any of the configuration flags below !!
