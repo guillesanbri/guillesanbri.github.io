@@ -252,10 +252,12 @@ nav {
 }
 
 .post {
+  
+  padding: 1em 1em;
+  
   blockquote {
     margin: 1.8em .8em;
     border-left: 2px solid $gray;
-    padding: 1em 1em;
     color: $gray;
     font-size: 95%;
     font-style: italic;
