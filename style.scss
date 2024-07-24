@@ -19,7 +19,7 @@ html {
 
 body {
 	background: #FAFAFA;
-  font: 18px/1.4 $helvetica;
+  font: 18px/1.4 'Inter';
   color: $darkGray;
 }
 
@@ -31,7 +31,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $helveticaNeue;
+  font-family: 'Inter';
   color: $darkerGray;
   font-weight: bold;
 
@@ -194,7 +194,7 @@ img {
   margin: 0;
   color: $darkGray;
   cursor: pointer;
-  font-family: $helveticaNeue;
+  font-family: 'Inter';
   font-weight: 300;
   font-size: 28px;
   letter-spacing: 1px;
@@ -213,7 +213,7 @@ img {
 nav {
   float: right;
   margin-top: 23px; // @TODO: Vertically middle align
-  font-family: $helveticaNeue;
+  font-family: 'Inter';
   font-size: 18px;
 
   @include mobile {
@@ -306,6 +306,52 @@ footer {
   margin-bottom: 1rem; 
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; 
   border-radius: 0.5rem;
+}
+
+$border-color: rgba(black, .3);
+
+.timeline-item {
+	padding: 3em 2em 2em;
+	position: relative;
+	color: rgba(black, .7);
+	border-left: 2px solid $border-color;
+	
+	p {
+		font-size: 1rem;
+	}
+	
+	&::before {
+		content: attr(date-is);
+		position: absolute;
+		left: 2em;
+		font-weight: bold;
+		top: 1em;
+		display: block;
+		font-family: 'Inter';
+		font-weight: 700;
+		font-size: .785rem;
+	}
+
+	&::after {
+		width: 10px;
+		height: 10px;
+		display: block;
+		top: 1em;
+		position: absolute;
+		left: -5.5px;
+		border-radius: 10px;
+		content: '';
+		border: 2px solid $border-color;
+		background: white;
+	}
+
+	&:last-child {
+		border-image: linear-gradient(
+			to bottom,
+			$border-color 60%,
+			rgba($border-color, 0)) 1 100%
+		;
+	}
 }
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS

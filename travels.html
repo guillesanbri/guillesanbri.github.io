@@ -1,18 +1,34 @@
 ---
 layout: page
 permalink: /travels/
-title: Travels
+title: Travels - A few pics from a few places 🌍
 ---
 
-A few pics of a few places :^)
+<!-- ty https://codepen.io/NielsVoogt/pen/MbMMxv/ -->
 
-<ol>
+<div class="container">
+	
   {% for place in site.data.places %}
-    <li>
-      <strong>{{ place.name }}</strong>
-      <ul>
-        <li>Visited: {{ place.visited }}</li>
-      </ul>
-    </li>
+
+    <div class="timeline-item" date-is="{{ place.visited }}">
+      <h2>{{ place.name }}</h2>
+      {% if place.description %}
+      <p>
+        {{ place.description }}
+      </p>
+      {% endif %}
+      <p>
+        <img src="https://placehold.co/100x100"/>
+        <img src="https://placehold.co/100x100"/>
+        <img src="https://placehold.co/100x100"/>
+        <img src="https://placehold.co/100x100"/>
+        <img src="https://placehold.co/100x100"/>
+        <img src="https://placehold.co/100x100"/>
+        <img src="https://placehold.co/100x100"/>
+        <img src="https://placehold.co/100x100"/>
+      </p>
+    </div>
+	
   {% endfor %}
-</ol>
+	
+</div>
