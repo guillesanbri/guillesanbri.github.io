@@ -1,0 +1,18 @@
+---
+layout: page
+permalink: /travels/
+title: Travels
+---
+
+A few pics of a few places :^)
+
+<ol>
+  {% for place in site.data.places %}
+    <li>
+      <strong>{{ place.name }}</strong>
+      <ul>
+        <li>Visited: {{ place.visited }}</li>
+      </ul>
+    </li>
+  {% endfor %}
+</ol>

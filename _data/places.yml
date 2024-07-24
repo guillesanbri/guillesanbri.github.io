@@ -1,0 +1,6 @@
+- name: "Paris, France"
+  visited: "April 2019"
+- name: "Tokyo, Japan"
+  visited: "October 2018"
+- name: "New York, USA"
+  visited: "June 2017"
