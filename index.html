@@ -2,49 +2,39 @@
 layout: default
 ---
 
-<div class="posts">
-  {% for post in site.posts %}
-    {% if post.pinned %}
-      <div class="post-card">
-        <a href="{{ site.baseurl }}{{ post.url }}">
-          <img src="images/{{post.folder}}/index.png" style="border-radius: 0.5rem 0.5rem 0rem 0rem" alt="Index photo">
-        </a>
-        <article class="post">
-            <h1>
-              <a href="{{ site.baseurl }}{{ post.url }}">📌 {{ post.title }}</a>
-            </h1>
-            <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
-            <br>
-            <div align="right">
-              {% for cat in post.categories %}
-              <a href="{{ site.baseurl }}/categories/#{{ cat | replace: ' ', '-' }}" class="chip chip-primary">{{ cat }}</a>
-              {% endfor %}
+<div id="main" role="main" class="container">
+  <div class="posts">
+    <div class="post-grid">
+      {% for post in site.posts %}
+        {% if post.pinned %}
+          <div class="post-card">
+            <a href="{{ site.baseurl }}{{ post.url }}">
+              <img src="images/{{post.folder}}/index.png" style="border-bottom: 1px solid #000000" alt="Index photo">
+            </a>
+            <article class="post">
+                <h3>
+                  <a href="{{ site.baseurl }}{{ post.url }}">📌 {{ post.title }}</a>
+                </h3>
+                <br>
+            </article>
+          </div>
+        {% endif %}
+      {% endfor %}
+      {% for post in site.posts %}
+        {% unless post.pinned %}
+          <div class="post-card">
+              <a href="{{ site.baseurl }}{{ post.url }}">
+                <img src="images/{{post.folder}}/index.png" style="border-bottom: 1px solid #000000" alt="Index photo">
+              </a>
+              <article class="post">
+                  <h3>
+                    <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+                  </h3>
+                  <br>
+              </article>
             </div>
-        </article>
-      </div>
-    {% endif %}
-  {% endfor %}
-  {% for post in site.posts %}
-    {% unless post.pinned %}
-      <div class="post-card">
-          <a href="{{ site.baseurl }}{{ post.url }}">
-            <img src="images/{{post.folder}}/index.png" style="border-radius: 0.5rem" alt="Index photo">
-          </a>
-          <article class="post">
-              <h1>
-                <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
-              </h1>
-              <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
-              <br>
-              <div align="right">
-                {% for cat in post.categories %}
-                <a href="{{ site.baseurl }}/categories/#{{ cat | replace: ' ', '-' }}" class="chip chip-primary">{{ cat }}</a>
-                {% endfor %}
-              </div>
-          </article>
-        </div>
-    {% endunless %}
-  {% endfor %}
-  <br>
-  <b>Welcome! Hope you find something interesting!</b>
+        {% endunless %}
+      {% endfor %}
+    </div>
+  </div>
 </div>

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Scale invariant log loss mathematical proof"
+title: "Scale Invariant Log Loss Mathematical Proof"
 categories: [Deep Learning, Computer Vision]
 folder: scale-invariant-loss
 ---
