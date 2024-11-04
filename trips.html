@@ -1,0 +1,33 @@
+---
+layout: page
+permalink: /trips/
+title: Trips
+---
+
+<!-- ty https://codepen.io/NielsVoogt/pen/MbMMxv/ -->
+
+Some pics I've taken in places I've been to
+
+<br><br>
+
+<div class="container">
+	
+  {% for place in site.data.places %}
+
+    <div class="timeline-item" date-is="{{ place.visited }}">
+      <h2>{{ place.name }}</h2>
+      {% if place.description %}
+      <p>
+        {{ place.description }}
+      </p>
+      {% endif %}
+      <p>
+        {% for url in place.pics %}
+          <img height="150px" src="{{ url }}"/>
+        {% endfor %}
+      </p>
+    </div>
+	
+  {% endfor %}
+	
+</div>

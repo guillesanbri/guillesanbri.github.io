@@ -1,7 +1,32 @@
 - name: "Paris, France"
   visited: "April 2019 → April 2020"
   description: "Description test"
+  pics:
+    [
+      "https://placehold.co/2268x4032",
+      "https://placehold.co/4032x2268",
+      "https://placehold.co/2268x4032",
+      "https://placehold.co/2268x4032",
+      "https://placehold.co/4032x2268",
+      "https://placehold.co/2268x4032",
+      "https://placehold.co/4032x2268",
+    ]
+
 - name: "Tokyo, Japan"
   visited: "October 2018"
+  pics:
+    [
+      "https://placehold.co/100x100",
+      "https://placehold.co/100x100",
+      "https://placehold.co/100x100"
+    ]
+
 - name: "New York, USA"
   visited: "June 2017"
+  pics:
+    [
+      "https://placehold.co/100x100",
+      "https://placehold.co/100x100",
+      "https://placehold.co/100x100",
+      "https://placehold.co/100x100"
+    ]
