@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Setting up a Deep Learning development rig with Docker"
+title: "Deep Learning Development with Docker"
 categories: [Deep Learning]
 folder: cuda-runtime-docker
 ---
