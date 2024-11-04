@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Surgical gauze segmentation dataset"
+title: "Surgical Gauze Segmentation Dataset"
 categories: [Computer Vision, Deep Learning]
 folder: gauzes-dataset
 ---

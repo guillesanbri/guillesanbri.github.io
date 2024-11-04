@@ -24,21 +24,31 @@
 
           <nav>
             <a href="{{ site.baseurl }}/">Blog</a>
+            -
             <a href="{{ site.baseurl }}/categories">Categories</a>
+            -
+            <!--
+            <a href="{{ site.baseurl }}/essays">Essays</a>
+            -
+            <a href="{{ site.baseurl }}/pics">Pics</a>
+            -
+            -->
             <a href="{{ site.baseurl }}/about">About</a>
           </nav>
         </header>
       </div>
     </div>
 
-    <div id="main" role="main" class="container">
-      {{ content }}
-    </div>
+    {{ content }}
 
     <div class="wrapper-footer">
       <div class="container">
         <footer class="footer">
-          {% include svg-icons.html %}
+          <a href="https://github.com/guillesanbri">GitHub</a>
+          -
+          <a href="https://x.com/GSBrRead">𝕏 / Twitter</a>
+          -
+          <a href="https://www.linkedin.com/in/guillesanbri/">LinkedIn</a>
         </footer>
       </div>
     </div>
