@@ -14,4 +14,4 @@ I'm Guillermo. I studied Industrial Electronics and Automation Engineering and t
 
 ### Contact
 
-Feel free to shoot me a DM at [GSBrread@Twitter](https://twitter.com/GSBrread) if you want to chat!
+Feel free to shoot me a DM at [GSBrread @ 𝕏 / Twitter](https://twitter.com/GSBrread) if you want to chat!
