@@ -23,11 +23,21 @@ body {
   color: $darkGray;
 }
 
+
 .container {
   margin: 0 auto;
-  max-width: 740px;
+  max-width: 900px;
   padding: 0 10px;
   width: 100%;
+}
+
+@media (max-width: 900px) {
+  .container {
+    margin: 0 auto;
+    max-width: 740px;
+    padding: 0 10px;
+    width: 100%;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -306,6 +316,25 @@ footer {
   margin-bottom: 1rem; 
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; 
   border-radius: 0.5rem;
+}
+
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Default to 3 columns */
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .post-grid {
+    grid-template-columns: 1fr; /* 1 column for small screens */
+  }
+}
+
+.post {
+  margin: 0 auto;
+  max-width: 740px;
+  padding: 0 10px;
+  width: 100%;
 }
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
