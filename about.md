@@ -12,7 +12,9 @@ This page is a collection of my personal projects and thoughts, primarily focuse
 
 I'm Guillermo. I studied Industrial Electronics and Automation Engineering and then diverted into a Master's in Computer Science, focusing on Computer Vision and Deep Learning. Now, I work as a Research ML Engineer at [Unify](https://unify.ai/) building infra for LLMs.
 
+<!-- 
 <img src="{{ site.baseurl }}/images/about.jpg" alt="A picture of me, you are not missing a lot"/>
+-->
 
 ### Contact
 
