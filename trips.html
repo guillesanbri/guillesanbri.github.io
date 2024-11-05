@@ -6,28 +6,32 @@ title: Trips
 
 <!-- ty https://codepen.io/NielsVoogt/pen/MbMMxv/ -->
 
-Some pics I've taken in places I've been to
+Pics I've taken in places I've been to
 
 <br><br>
 
 <div class="container">
-	
   {% for place in site.data.places %}
 
-    <div class="timeline-item" date-is="{{ place.visited }}">
-      <h2>{{ place.name }}</h2>
+    <div id="{{ place.name | slugify }}-{{ place.visited | slugify }}" class="timeline-item" date-is="{{ place.visited }}">
+      <h2>
+        <a href="#{{ place.name | slugify }}-{{ place.visited | slugify }}">{{ place.name }}</a>
+      </h2>
       {% if place.description %}
-      <p>
-        {{ place.description }}
-      </p>
+        <p>{{ place.description }}</p>
       {% endif %}
-      <p>
-        {% for url in place.pics %}
-          <img height="150px" src="{{ url }}"/>
+      <div class="gallery">
+        {% for pic in place.pics %}
+          <a 
+            href="{{ pic.url }}" 
+            data-lightbox="gallery-{{ place.name }}" 
+            data-title="{{ place.name }}{% if pic.description %} - {{ pic.description }}{% endif %}"
+          >
+            <img height="250px" src="{{ pic.url }}" alt="Photo of {{ place.name }}" />
+          </a>
         {% endfor %}
-      </p>
+      </div>
     </div>
-	
+
   {% endfor %}
-	
 </div>

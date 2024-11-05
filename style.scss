@@ -378,6 +378,10 @@ $border-color: rgba(black, .3);
 	color: rgba(black, .7);
 	border-left: 2px solid $border-color;
 	
+	a {
+		color: $black;
+	}
+
 	p {
 		font-size: 1rem;
 	}
