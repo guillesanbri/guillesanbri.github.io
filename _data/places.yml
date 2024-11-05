@@ -1,32 +1,120 @@
-- name: "Paris, France"
-  visited: "April 2019 → April 2020"
-  description: "Description test"
+- name: "Bilbao, ES"
+  visited: "October 2024"
+  description: "Running a marathon just in time for my quarter-life crisis"
   pics:
-    [
-      "https://placehold.co/2268x4032",
-      "https://placehold.co/4032x2268",
-      "https://placehold.co/2268x4032",
-      "https://placehold.co/2268x4032",
-      "https://placehold.co/4032x2268",
-      "https://placehold.co/2268x4032",
-      "https://placehold.co/4032x2268",
-    ]
+    - url: "https://placehold.co/720x960"
+      description: "View of the Eiffel Tower at sunset"
 
-- name: "Tokyo, Japan"
-  visited: "October 2018"
+- name: "Istanbul, TR"
+  visited: "October 2024"
   pics:
-    [
-      "https://placehold.co/100x100",
-      "https://placehold.co/100x100",
-      "https://placehold.co/100x100"
-    ]
+    - url: "https://placehold.co/720x960"
+      description: "View of the Eiffel Tower at sunset"
 
-- name: "New York, USA"
-  visited: "June 2017"
+- name: "Berlin, DE"
+  visited: "August 2024"
   pics:
-    [
-      "https://placehold.co/100x100",
-      "https://placehold.co/100x100",
-      "https://placehold.co/100x100",
-      "https://placehold.co/100x100"
-    ]
+    - url: "https://placehold.co/720x960"
+      description: "View of the Eiffel Tower at sunset"
+
+- name: "Tarifa, ES"
+  visited: "July 2024"
+  pics:
+    - url: "https://placehold.co/720x960"
+      description: "View of the Eiffel Tower at sunset"
+
+- name: "Valencia, ES"
+  visited: "July 2024"
+  pics:
+    - url: "https://placehold.co/720x960"
+      description: "View of the Eiffel Tower at sunset"
+
+- name: "Sevilla, ES"
+  visited: "July 2024"
+  pics:
+    - url: "https://placehold.co/720x960"
+      description: "View of the Eiffel Tower at sunset"
+
+- name: "Al-Qāhirah, EG"
+  visited: "May 2024"
+  pics:
+    - url: "https://placehold.co/720x960"
+      description: "View of the Eiffel Tower at sunset"
+
+- name: "Roma, IT"
+  visited: "May 2024"
+  pics:
+    - url: "https://placehold.co/720x960"
+      description: "View of the Eiffel Tower at sunset"
+
+- name: "Valencia, ES"
+  visited: "May 2024"
+  pics:
+    - url: "https://placehold.co/720x960"
+      description: "View of the Eiffel Tower at sunset"
+
+- name: "Leeds, GB"
+  visited: "March 2024"
+  pics:
+    - url: "https://placehold.co/720x960"
+      description: "View of the Eiffel Tower at sunset"
+
+- name: "Madrid, ES"
+  visited: "February 2024"
+  pics:
+    - url: "https://placehold.co/720x960"
+      description: "View of the Eiffel Tower at sunset"
+
+- name: "York, GB"
+  visited: "January 2024"
+  pics:
+    - url: "https://placehold.co/720x960"
+      description: "View of the Eiffel Tower at sunset"
+
+- name: "Leeds, GB"
+  visited: "January 2024"
+  pics:
+    - url: "https://placehold.co/720x960"
+      description: "View of the Eiffel Tower at sunset"
+
+- name: "London, GB"
+  visited: "January 2024"
+  pics:
+    - url: "https://placehold.co/720x960"
+      description: "View of the Eiffel Tower at sunset"
+
+- name: "Salamanca, ES"
+  visited: "xxx 2023"
+  pics:
+    - url: "https://placehold.co/720x960"
+      description: "View of the Eiffel Tower at sunset"
+
+- name: "Hamburg, DE"
+  visited: "December 2023"
+  pics:
+    - url: "https://placehold.co/720x960"
+      description: "View of the Eiffel Tower at sunset"
+
+- name: "Segovia, ES"
+  visited: "xxx 2023"
+  pics:
+    - url: "https://placehold.co/720x960"
+      description: "View of the Eiffel Tower at sunset"
+
+- name: "Leeds, GB"
+  visited: "xxx 2023"
+  pics:
+    - url: "https://placehold.co/720x960"
+      description: "View of the Eiffel Tower at sunset"
+
+- name: "Manchester, GB"
+  visited: "xxx 2023"
+  pics:
+    - url: "https://placehold.co/720x960"
+      description: "View of the Eiffel Tower at sunset"
+
+- name: "Barcelona, ES"
+  visited: "October 2023"
+  pics:
+    - url: "https://placehold.co/720x960"
+      description: "View of the Eiffel Tower at sunset"
