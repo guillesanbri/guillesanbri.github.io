@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Scale Invariant Log Loss Mathematical Proof"
+title: "Scale Invariant Log (SiLog) Loss Proof"
 categories: [Deep Learning, Computer Vision]
 folder: scale-invariant-loss
 ---
@@ -30,7 +30,7 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
 
 ***
 
-Over the last few months I have been working in (monocular) depth estimation for my Master's Thesis. When I started digging into commonly used loss functions, I came across the Scale Invariant Log Loss. This function was presented by Eigen et al. in *Depth Map Prediction from a Single Image using a Multi-Scale Deep Network* ([arXiv](https://arxiv.org/pdf/1406.2283.pdf)) and it is extensively used (usually in conjunction with additional scale-dependant terms) to train and evaluate depth prediction models. The catch about this function is that the scale of the predicted output does not affect its magnitude. When I first read that, I wanted to take a look at the mathematical proof of the scale invariance, but could not find any already written. Therefore, this post tries to relieve the mathematical itch of those in my position.
+Over the last few months I have been working in (monocular) depth estimation for my Master's Thesis. When I started digging into commonly used loss functions, I came across the Scale Invariant Log (SiLog) Loss. This function was presented by Eigen et al. in *Depth Map Prediction from a Single Image using a Multi-Scale Deep Network* ([arXiv](https://arxiv.org/pdf/1406.2283.pdf)) and it is extensively used (usually in conjunction with additional scale-dependant terms) to train and evaluate depth prediction models. The catch about this function is that the scale of the predicted output does not affect its magnitude. When I first read that, I wanted to take a look at the mathematical proof of the scale invariance, but could not find any already written. Therefore, this post tries to relieve the mathematical itch of those in my position.
 
 This should be a short post, but you can jump straight to the proof clicking [here](#the-actual-mathematical-proof).
 
