@@ -279,11 +279,12 @@ nav {
   padding: 0em 0.2em 0em 0.2em;
   
   blockquote {
-    margin: 1.8em .8em;
-    border-left: 2px solid $gray;
-    color: $gray;
+    margin: 1.25em 0em;
+    padding: 0px 15px;
+    background-color: #e9f0fa;
+    border: 1px solid #a5cbff;
+    border-radius: 0.25rem;
     font-size: 95%;
-    font-style: italic;
   }
 
   .comments {
