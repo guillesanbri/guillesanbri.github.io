@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Scale Invariant Log (SiLog) Loss Proof"
-categories: [Deep Learning, Computer Vision]
+tags: [Deep Learning, Computer Vision]
 folder: scale-invariant-loss
 ---
 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Project North Star
-categories: AR
+tags: AR
 folder: project-northstar
 ---
 ***

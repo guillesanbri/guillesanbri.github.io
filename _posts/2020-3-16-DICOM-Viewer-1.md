@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Virtual Reality Medical Files Viewer"
-categories: [VR, Unity3D]
+tags: [VR, Unity3D]
 folder: VR-DICOM-1
 pinned: true
 ---

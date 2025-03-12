@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Project North Star: Intel T265 Integration"
-categories: [AR, Unity3D]
+tags: [AR, Unity3D]
 folder: NS-software-1
 ---
 

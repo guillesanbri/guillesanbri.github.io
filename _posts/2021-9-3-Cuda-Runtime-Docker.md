@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Deep Learning Development with Docker"
-categories: [Deep Learning]
+tags: [Deep Learning]
 folder: cuda-runtime-docker
 ---
 ***
