@@ -10,7 +10,7 @@ pinned: true
 
 This post will cover some of the features of a Virtal Reality DICOM file viewer implemented in Unity3D. It uses VRTK4 as a base for the VR part and EvilDICOM to manage the DICOM part of things.
 
-<div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/iR64nLS59bP8ZalKLK" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div>
+<div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/iR64nLS59bP8ZalKLK" width="100%" height="100%" style="position:absolute;border-radius: 0.25rem;"  frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div>
 
 ***
 
@@ -48,19 +48,19 @@ Developing a medical application that complies with DICOM ensures interoperabili
 
 * **Clipping plane**: The clipping plane allows the user to "cut" through the model, visualizing the interiors of the reconstructed scan.
 
-<div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/dTik6EZaL24aqWcF9G" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div>
+<div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/dTik6EZaL24aqWcF9G" width="100%" height="100%" style="position:absolute;border-radius: 0.25rem;"  frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div>
 
 ***
 
 * **Projection pointer**: A pointer allows the user to localize a point. Three grabbable screens show the projection said point indicates in the three body planes, (Sagittal, Coronal and Transverse).
 
-<div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/SRd8RVou5vnca7nLZO" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div>
+<div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/SRd8RVou5vnca7nLZO" width="100%" height="100%" style="position:absolute;border-radius: 0.25rem;"  frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div>
 
 ***
 
 * **Window adjustment**: DICOM supports different "window" center and widths, this means that there are some parameters that can be tweaked during rendering to show different tissues (bones, fat, muscles... even fabric!).
 
-<div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/ami9cZJkR2jgMSFnHm" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div>
+<div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/ami9cZJkR2jgMSFnHm" width="100%" height="100%" style="position:absolute;border-radius: 0.25rem;"  frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div>
 
 ***
 
