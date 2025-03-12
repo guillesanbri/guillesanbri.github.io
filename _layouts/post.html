@@ -4,8 +4,12 @@ layout: default
 
 <div id="main" role="main" class="post-body">
   <article class="post">
-    <h1>{{ page.title }}</h1><br>
+    <h1>{{ page.title }}</h1>
     
+    <div class="date">
+      {{ page.date | date: "%B %e, %Y" }}
+    </div>
+
     <div class="post-tags" align=right>
     {% if post %}
       {% assign tags = post.tags %}
@@ -21,10 +25,6 @@ layout: default
 
     <div class="entry">
       {{ content }}
-    </div>
-
-    <div class="date">
-      Written on {{ page.date | date: "%B %e, %Y" }}
     </div>
 
     {% include disqus.html %}
