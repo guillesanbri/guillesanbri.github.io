@@ -6,35 +6,39 @@ layout: default
   <div class="posts">
     <div class="post-grid">
       {% for post in site.posts %}
-        {% if post.pinned %}
-          <div class="post-card">
-            <a href="{{ site.baseurl }}{{ post.url }}">
-              <img src="images/{{post.folder}}/index.png" style="border-bottom: 1px solid #000000" alt="Index photo">
-            </a>
-            <article class="post">
-                <h3>
-                  <a href="{{ site.baseurl }}{{ post.url }}">📌 {{ post.title }}</a>
-                </h3>
-                <br>
-            </article>
+      {% if post.pinned %}
+      <div class="post-card">
+        <a href="{{ site.baseurl }}{{ post.url }}" class="post-card-link">
+          <div class="image-container">
+            <img src="images/{{post.folder}}/index.png" alt="Index photo">
+            <div class="gradient-overlay"></div>
+            <div class="title-container">
+              <h3 class="overlay-title">
+                <span class="pin-icon">📌</span> {{ post.title }}
+              </h3>
+            </div>
           </div>
-        {% endif %}
+        </a>
+      </div>
+      {% endif %}
       {% endfor %}
       {% for post in site.posts %}
-        {% unless post.pinned %}
-          <div class="post-card">
-              <a href="{{ site.baseurl }}{{ post.url }}">
-                <img src="images/{{post.folder}}/index.png" style="border-bottom: 1px solid #000000" alt="Index photo">
-              </a>
-              <article class="post">
-                  <h3>
-                    <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
-                  </h3>
-                  <br>
-              </article>
+      {% unless post.pinned %}
+      <div class="post-card">
+        <a href="{{ site.baseurl }}{{ post.url }}" class="post-card-link">
+          <div class="image-container">
+            <img src="images/{{post.folder}}/index.png" alt="Index photo">
+            <div class="gradient-overlay"></div>
+            <div class="title-container">
+              <h3 class="overlay-title">
+                {{ post.title }}
+              </h3>
             </div>
-        {% endunless %}
-      {% endfor %}
+          </div>
+        </a>
+      </div>
+      {% endunless %}
+    {% endfor %}
     </div>
   </div>
 </div>

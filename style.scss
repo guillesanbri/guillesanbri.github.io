@@ -23,7 +23,7 @@ html {
 
 body {
 	background: #FAFAFA;
-  font: 18px/1.4 $helvetica;
+  font: 18px/1.4 $body-font;
   color: $darkGray;
   height: 100%;
   display: flex;
@@ -51,8 +51,12 @@ body {
   }
 }
 
+body, p, div, span {
+  font-family: $body-font;
+}
+
 h1, h2, h3, h4, h5, h6 {
-  font-family: $helveticaNeue;
+  font-family: $heading-font;
   color: $darkerGray;
   font-weight: bold;
 
@@ -92,11 +96,12 @@ p {
 }
 
 a {
-  color: $blue;
+  color: #35A7FF; // 418958;
+  font-weight: 500;
   text-decoration: none;
 	cursor: pointer;
   &:hover, &:active {
-    color: $blue;
+    color: #35A7FF; // 4E6E5D;
   }
 }
 
@@ -175,7 +180,7 @@ img {
 
 .wrapper-masthead {
   margin-bottom: 25px;
-  border-bottom: 1px solid $black;
+  border-bottom: 1px solid black;
 }
 
 .masthead {
@@ -217,7 +222,7 @@ img {
   margin: 0;
   color: $darkGray;
   cursor: pointer;
-  font-family: $helveticaNeue;
+  font-family: $heading-font;
   font-weight: 300;
   font-size: 28px;
   letter-spacing: 1px;
@@ -236,7 +241,7 @@ img {
 nav {
   float: right;
   margin-top: 23px; // @TODO: Vertically middle align
-  font-family: $helveticaNeue;
+  font-family: $heading-font;
   font-size: 18px;
 
   @include mobile {
@@ -251,7 +256,7 @@ nav {
     margin-right: 10px;
     color: $black;
     text-align: right;
-    font-weight: 300;
+    font-weight: 400;
     letter-spacing: 1px;
 
     @include mobile {
@@ -281,8 +286,8 @@ nav {
   blockquote {
     margin: 1.25em 0em;
     padding: 0px 15px;
-    background-color: #e9f0fa;
-    border: 1px solid #a5cbff;
+    background-color: #eff2f7;
+    border: 1px solid #35A7FF;
     border-radius: 0.25rem;
     font-size: 95%;
   }
@@ -305,6 +310,7 @@ nav {
 footer {
   padding: 20px 0;
   text-align: center;
+  font-family: $heading-font;
 
   a {
     margin-left: 10px;
@@ -321,11 +327,19 @@ footer {
 
 }
 
+hr {
+  border: none;
+  height: 1px;
+  background: #000;
+  background: repeating-linear-gradient(90deg,#000,#000 6px,transparent 6px,transparent 12px);
+}
+
 .chip{
   padding: 8px 10px;
   border-radius: 5px;
-  font-weight: 600;
-  font-size: 12px;
+  font-family: $heading-font;
+  font-weight: 500;
+  font-size: 0.8rem;
   box-shadow: 0 2px 5px rgba(0,0,0,.25);
   margin: 0 1px;
   
@@ -337,25 +351,99 @@ footer {
   color: whitesmoke;
 }
 
-.post-card{
-  /* background: #FFFFFF; */
-  /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
-  border-radius: 0.25rem;
+
+.post-card {
+  // border-radius: 8px;
+  border: 1px solid lightgray;
+  // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.post-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.post-card-link {
+  display: block;
+  text-decoration: none;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.post-card:hover .image-container img {
+  transform: scale(1.05);
+}
+
+
+.gradient-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(to top,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.5) 25%,
+      rgba(0, 0, 0, 0.2) 50%,
+      rgba(0, 0, 0, 0) 100%),
+    linear-gradient(to top,
+      rgba(0, 0, 0, 0.3) 0%,
+      rgba(0, 0, 0, 0) 70%);
+}
+
+.title-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.overlay-title {
+  color: white;
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.pin-icon {
+  margin-right: 5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .image-container {
+    height: 180px;
+  }
   
-  border-top: 1px solid $black;
-  border-left: 1px solid $black;
-  border-bottom: 1px solid $black;
-  border-right: 1px solid $black;
-  h3 {
-    margin-bottom: -1rem; 
-    margin-left: 10px;
+  .overlay-title {
+    font-size: 1.1rem;
   }
 }
 
 .post-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* Default to 3 columns */
-  gap: 20px 20px;
+  gap: 0.5rem 2rem;
 }
 
 @media (max-width: 900px) {
