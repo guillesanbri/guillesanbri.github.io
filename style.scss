@@ -371,6 +371,11 @@ footer {
   width: 100%;
 }
 
+/* Style only inline code (not code blocks) */
+code.highlighter-rouge {
+  padding: 0.25rem 0.5rem !important;
+}
+
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
 // @import "highlights";
