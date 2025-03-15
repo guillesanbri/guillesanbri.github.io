@@ -3,6 +3,7 @@ layout: post
 title: "Project North Star: Building Process"
 tags: AR
 folder: building-process
+toc: true
 ---
 ***
 

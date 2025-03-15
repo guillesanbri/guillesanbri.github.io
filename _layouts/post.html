@@ -2,31 +2,48 @@
 layout: default
 ---
 
-<div id="main" role="main" class="post-body">
-  <article class="post">
-    <h1>{{ page.title }}</h1>
-    
-    <div class="date">
-      {{ page.date | date: "%B %e, %Y" }}
-    </div>
+{% if page.toc %}
+{% assign pw_class = "page-wrapper" %}
+{% assign main_class = "main-content" %}
+{% endif %}
 
-    <div class="post-tags" align=right>
-    {% if post %}
-      {% assign tags = post.tags %}
-    {% else %}
-      {% assign tags = page.tags %}
+<div class=" {{ pw_class }} ">
+    {% if page.toc %}
+      <aside class="toc-sidebar">
+        <div class="toc-container">
+          <h4 class="toc-heading">Contents</h4>
+          {% include toc.html html=content %}
+        </div>
+      </aside>
     {% endif %}
-    
-    <!-- <b>Tags: &nbsp;&nbsp;</b> -->
-    {% for tag in tags %}
-      <a href="{{site.baseurl}}/tags/#{{ tag | replace: ' ', '-' }}" class="chip chip-primary">{{tag}}</a>
-    {% endfor %}
-    </div>
+  <main class=" {{ main_class }} ">
+    <div id="main" role="main" class="post-body">
+      <article class="post">
+        <h1>{{ page.title }}</h1>
+        
+        <div class="date">
+          {{ page.date | date: "%B %e, %Y" }}
+        </div>
 
-    <div class="entry">
-      {{ content }}
-    </div>
+        <div class="post-tags" align=right>
+        {% if post %}
+          {% assign tags = post.tags %}
+        {% else %}
+          {% assign tags = page.tags %}
+        {% endif %}
+        
+        <!-- <b>Tags: &nbsp;&nbsp;</b> -->
+        {% for tag in tags %}
+          <a href="{{site.baseurl}}/tags/#{{ tag | replace: ' ', '-' }}" class="chip chip-primary">{{tag}}</a>
+        {% endfor %}
+        </div>
 
-    {% include disqus.html %}
-  </article>
+        <div class="entry">
+          {{ content }}
+        </div>
+
+        {% include disqus.html %}
+      </article>
+    </div>
+  </main>
 </div>

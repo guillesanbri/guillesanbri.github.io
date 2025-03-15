@@ -1,0 +1,47 @@
+{% capture tocWorkspace %}
+    {% comment %}
+        <!-- Parameters -->
+        {% endcomment %}
+        {% assign minHeader = include.h_min | default: 1 %}
+        {% assign maxHeader = include.h_max | default: 6 %}
+        {% assign nodes = include.html | split: '<h' %}
+        
+    {% comment %}
+        <!-- Build TOC -->
+    {% endcomment %}
+    {% capture my_toc %}{% endcapture %}
+    {% for node in nodes %}
+        {% if node == "" %}
+            {% continue %}
+        {% endif %}
+        
+        {% assign headerLevel = node | replace: '"', '' | slice: 0, 1 | times: 1 %}
+        
+        {% if headerLevel < minHeader or headerLevel > maxHeader %}
+            {% continue %}
+        {% endif %}
+        
+        {% assign _workspace = node | split: '</h' %}
+        {% assign _idWorkspace = _workspace[0] | split: 'id="' %}
+        {% assign _idWorkspace = _idWorkspace[1] | split: '"' %}
+        {% assign html_id = _idWorkspace[0] %}
+        
+        {% capture _hAttrToStrip %}{{ _workspace[0] | split: '>' | first }}>{% endcapture %}
+        {% assign header = _workspace[0] | replace: _hAttrToStrip, '' %}
+        
+        {% assign space = '' %}
+        {% for i in (1..headerLevel) %}
+            {% assign space = space | prepend: '  ' %}
+        {% endfor %}
+        
+        {% capture my_toc %}{{ my_toc }}
+{{ space }}- [{{ header | strip_html }}](#{{ html_id }}){% endcapture %}
+    {% endfor %}
+    
+    {% if include.class %}
+        {% capture my_toc %}{:.{{ include.class }}}
+{{ my_toc | normalize_whitespace }}{% endcapture %}
+    {% endif %}
+{% endcapture %}{{ tocWorkspace | strip }}
+
+{{ my_toc | markdownify }}
