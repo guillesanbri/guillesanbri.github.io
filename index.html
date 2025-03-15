@@ -2,43 +2,63 @@
 layout: default
 ---
 
-<div id="main" role="main" class="container">
-  <div class="posts">
-    <div class="post-grid">
-      {% for post in site.posts %}
-      {% if post.pinned %}
-      <div class="post-card">
-        <a href="{{ site.baseurl }}{{ post.url }}" class="post-card-link">
-          <div class="image-container">
-            <img src="images/{{post.folder}}/index.png" alt="Index photo">
-            <div class="gradient-overlay"></div>
-            <div class="title-container">
-              <h3 class="overlay-title">
-                <span class="pin-icon">📌</span> {{ post.title }}
-              </h3>
+{% if true %}
+{% assign pw_class = "page-wrapper" %}
+{% assign main_class = "main-content" %}
+{% endif %}
+
+<div class=" {{ pw_class }} ">
+
+  <main class=" {{ main_class }} ">
+  <div id="main" role="main" class="container">
+    <div class="posts">
+      <div class="post-grid">
+        {% for post in site.posts %}
+        {% if post.pinned %}
+        <div class="post-card">
+          <a href="{{ site.baseurl }}{{ post.url }}" class="post-card-link">
+            <div class="image-container">
+              <img src="images/{{post.folder}}/index.png" alt="Index photo">
+              <div class="gradient-overlay"></div>
+              <div class="title-container">
+                <h3 class="overlay-title">
+                  <span class="pin-icon">📌</span> {{ post.title }}
+                </h3>
+              </div>
             </div>
-          </div>
-        </a>
-      </div>
-      {% endif %}
+          </a>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% for post in site.posts %}
+        {% unless post.pinned %}
+        <div class="post-card">
+          <a href="{{ site.baseurl }}{{ post.url }}" class="post-card-link">
+            <div class="image-container">
+              <img src="images/{{post.folder}}/index.png" alt="Index photo">
+              <div class="gradient-overlay"></div>
+              <div class="title-container">
+                <h3 class="overlay-title">
+                  {{ post.title }}
+                </h3>
+              </div>
+            </div>
+          </a>
+        </div>
+        {% endunless %}
       {% endfor %}
-      {% for post in site.posts %}
-      {% unless post.pinned %}
-      <div class="post-card">
-        <a href="{{ site.baseurl }}{{ post.url }}" class="post-card-link">
-          <div class="image-container">
-            <img src="images/{{post.folder}}/index.png" alt="Index photo">
-            <div class="gradient-overlay"></div>
-            <div class="title-container">
-              <h3 class="overlay-title">
-                {{ post.title }}
-              </h3>
-            </div>
-          </div>
-        </a>
       </div>
-      {% endunless %}
-    {% endfor %}
     </div>
   </div>
+  </main>
+
+  {% if true %}
+  <aside class="tag-sidebar">
+    <div class="tag-container">
+      <h4 class="tag-heading">Tags</h4>
+      {% include sidebar.html html=content %}
+    </div>
+  </aside>
+{% endif %}
+
 </div>

@@ -1,0 +1,16 @@
+<div id="archives">
+    {% assign sorted_tags = site.tags | sort %}
+    {% for tag in sorted_tags %}
+      <div class="archive-group">
+        {% capture tag_name %}{{ tag | first }}{% endcapture %}
+        <div id="#{{ tag_name | replace: ' ', '-' | slugize }}"></div>
+        <hr>
+        <b class="tag-head">{{ tag_name }}</b>
+        <a name="{{ tag_name | replace: ' ', '-' | slugize }}"></a>
+        {% for post in site.tags[tag_name] %}
+          <a href="{{ site.baseurl }}{{ post.url }}">{{post.title}}</a>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    <hr>
+    </div>

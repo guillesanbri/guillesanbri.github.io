@@ -483,6 +483,11 @@ code.highlighter-rouge {
   flex-shrink: 0;
 }
 
+.tag-sidebar {
+  width: 300px;
+  flex-shrink: 0;
+}
+
 /* Sticky container for TOC */
 .toc-container {
   position: sticky;
@@ -494,12 +499,26 @@ code.highlighter-rouge {
   border-right: 1px solid black;
 }
 
+.tag-container {
+  top: 0px; /* Distance from top of viewport when sticky */
+  padding: 15px;
+  overflow-y: auto; /* Scrollable if TOC is too long */
+  font-size: 75%;
+}
+
 /* TOC heading style */
 .toc-heading {
   margin-top: 0;
   margin-bottom: 15px;
   font-size: 18px;
   color: #333;
+}
+
+.tag-heading {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 18px;
+  // color: #333;
 }
 
 /* TOC list styles */
@@ -524,7 +543,21 @@ code.highlighter-rouge {
   border-bottom: 1px solid transparent;
 }
 
+.tag-container a {
+  color: #555;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  display: block;
+  padding: 3px 0;
+  border-bottom: 1px solid transparent;
+}
+
 .toc-container a:hover {
+  color: #000;
+  border-bottom-color: #ddd;
+}
+
+.tag-container a:hover {
   color: #000;
   border-bottom-color: #ddd;
 }
@@ -549,6 +582,10 @@ code.highlighter-rouge {
 
   
   .toc-sidebar {
+    display: none; /* Completely hides the TOC */
+  }
+
+  .tag-sidebar {
     display: none; /* Completely hides the TOC */
   }
 
