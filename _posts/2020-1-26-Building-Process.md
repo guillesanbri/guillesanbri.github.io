@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Project North Star: Building Process"
-tags: AR
+tags: [North Star]
 folder: building-process
 toc: true
 ---
