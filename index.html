@@ -11,8 +11,15 @@ layout: default
 
   <main class=" {{ main_class }} ">
   <div id="main" role="main" class="container">
+
     <div class="posts">
-      <div class="post-grid">
+
+      <div class="index-title">
+      <h3>Pinned Posts (3)</h3>
+      <hr>
+      </div>
+
+      <div class="post-grid-3">
         {% for post in site.posts %}
         {% if post.pinned %}
         <div class="post-card">
@@ -30,8 +37,17 @@ layout: default
         </div>
         {% endif %}
         {% endfor %}
+      </div>
+    </div>
+
+    <div class="posts">
+
+      <br>
+      <h3>All Posts ({{ site.posts | size }})</h3>
+      <hr>
+
+      <div class="post-grid">
         {% for post in site.posts %}
-        {% unless post.pinned %}
         <div class="post-card">
           <a href="{{ site.baseurl }}{{ post.url }}" class="post-card-link">
             <div class="image-container">
@@ -45,7 +61,6 @@ layout: default
             </div>
           </a>
         </div>
-        {% endunless %}
       {% endfor %}
       </div>
     </div>

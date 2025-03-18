@@ -446,8 +446,23 @@ hr {
   gap: 0.25rem 2rem;
 }
 
+.post-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Default to 3 columns */
+  gap: 0.25rem 2rem;
+}
+
+.index-title {
+  // font-size: 50%;
+  font-family: $heading-font;
+}
+
 @media (max-width: 900px) {
   .post-grid {
+    grid-template-columns: 1fr; /* 1 column for small screens */
+  }
+
+  .post-grid-3 {
     grid-template-columns: 1fr; /* 1 column for small screens */
   }
 }
