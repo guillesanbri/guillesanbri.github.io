@@ -5,28 +5,7 @@ tags: [Deep Learning, Computer Vision]
 folder: scale-invariant-loss
 ---
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    TeX: {
-      equationNumbers: {
-        autoNumber: "AMS"
-      }
-    },
-    tex2jax: {
-    inlineMath: [ ['$', '$'] ],
-    displayMath: [ ['$$', '$$'] ],
-    processEscapes: true,
-  }
-});
-MathJax.Hub.Register.MessageHook("Math Processing Error",function (message) {
-      alert("Math Processing Error: "+message[1]);
-    });
-MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
-      alert("Math Processing Error: "+message[1]);
-    });
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
+{% include mathjax.html %}
 
 ***
 
@@ -138,6 +117,3 @@ Related links
 + [Wikipedia article for Well-posed problems](https://en.wikipedia.org/wiki/Well-posed_problem)
 
 ***
-
-<!--https://github.com/mathjax/MathJax
-https://benlansdell.github.io/computing/mathjax/-->
