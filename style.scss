@@ -269,6 +269,24 @@ nav {
 // .main
 //
 
+.note {
+  margin: 1.25em 0em;
+  padding: 0px 15px;
+  background-color: #edf7ee;
+  border: 1px solid #21A179;
+  border-radius: 5px;
+  font-size: 95%;
+}
+
+.warning {
+  margin: 1.25em 0em;
+  padding: 0px 15px;
+  background-color: #f7ecec;
+  border: 1px solid #EF5B5B;
+  border-radius: 5px;
+  font-size: 95%;
+}
+
 .posts > .post {
   padding-bottom: 0em;
   border-bottom: 1px solid $lightGray;
@@ -478,6 +496,51 @@ hr {
 code.highlighter-rouge {
   padding: 0.25rem 0.5rem !important;
 }
+
+/* General table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+/* Table headers */
+th {
+  background-color: #f4f4f4;
+  color: #333;
+  font-weight: bold;
+  padding: 12px;
+  border: 1px solid #ddd;
+}
+
+/* Table rows */
+td {
+  padding: 5px;
+  border: 1px solid #ddd;
+}
+
+/* Alternating row colors */
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Hover effect */
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Responsive table */
+@media (max-width: 768px) {
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
 /* Layout structure */
 .page-wrapper {
   display: flex;
