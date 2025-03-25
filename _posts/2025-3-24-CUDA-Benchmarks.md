@@ -3,7 +3,7 @@ layout: post
 title: "How to Benchmark CUDA Kernels"
 tags: [CUDA]
 folder: CUDA-Benchmarks
-pinned: false
+pinned: true
 toc: true
 ---
 
