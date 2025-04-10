@@ -683,7 +683,76 @@ tr:hover {
   }
 }
 
+// Palette gallery
 
+.gallery {
+  display: flex;
+  flex-direction: column;
+}
+
+.photo-block {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 0rem;
+  align-items: flex-end;
+}
+.gallery > *:last-child .photo-block {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+
+.image-wrapper {
+  width: 60%;
+  padding-right: 0.5rem;
+  box-sizing: border-box;
+}
+
+.image-wrapper img {
+  width: 100%;
+  display: block;
+  border: 1px solid lightgray;
+}
+
+.palette {
+  width: 40%;
+  display: flex;
+  align-items: flex-end;
+  box-sizing: border-box;
+  border: 1px solid lightgray;
+}
+
+.swatch {
+  flex: 1;
+  aspect-ratio: 1 / 3; /* 3 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+  .photo-block {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .image-wrapper,
+  .palette {
+    width: 100%;
+    padding-right: 0rem;
+  }
+
+  .palette {
+    padding: 0;
+    margin-top: 5px;
+  }
+
+  .swatch {
+    aspect-ratio: 1 / 1;
+  }
+}
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start

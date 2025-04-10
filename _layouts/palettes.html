@@ -1,0 +1,32 @@
+---
+layout: page
+---
+
+<div class="date">
+  {{ page.month }}
+</div>
+
+    <div id="main" role="main">
+        <div class="gallery">
+            {% for item in page.palettes %}
+            <hr>
+              <div class="photo-block">
+                <div class="image-wrapper">
+                  <img src="{{ item.picture | relative_url }}" alt="Photo from {{ page.title }}">
+                </div>
+                <div class="palette">
+                  {% for hex in item.palette %}
+                    <div class="swatch" style="background-color: {{ hex }}">
+                      </div>
+                  {% endfor %}
+                </div>
+              </div>
+              
+            {% else %}
+              <p>No palettes found for this destination.</p>
+            {% endfor %}
+          </div>
+    </div>
+
+
+  

@@ -1,0 +1,19 @@
+---
+layout: page
+title: Palettes
+permalink: /palettes/
+---
+
+<p>A collection of palettes from pics I've taken.</p>
+
+{% assign sorted_palettes = site.palettes | sort: 'date' | reverse %}
+{% for destination_page in sorted_palettes %}
+    <article class="archive-item">
+    <hr>
+    <h4><a href="{{ destination_page.url | relative_url }}">{{ destination_page.title }}</a> - {{ destination_page.month }}</h4>
+
+    </article>
+{% endfor %}
+<hr>
+
+<p><b>Heavily</b> inspired by the <a href="https://seis.pointlessprojects.com/">Seis Colores Project</a>.</p>
