@@ -13,7 +13,7 @@ toc: true
 
 A few weeks ago, Meta published [Transformers without Normalization](https://arxiv.org/abs/2503.10622) and introduced **Dynamic Tanh (DyT)**, a surprisingly simple replacement for normalization layers (usually **LayerNorm** and **RMSNorm** in transformers). 
 
-I recommend giving the paper a read, but in summary: turns out that normalization layers' input-output mapping closely resembles tanh functions. Based on this observation, they keep the learnable $$\gamma$$ and $$\beta$$ to scale a tanh function and introduce a new learnable parameter $$\alpha$$ that scales the inputs, replacing LayerNorm. This results in:
+I recommend giving the paper a read, but in summary: turns out that normalization layers' input-output mapping closely resembles tanh functions. Based on this observation, they replace normalization layers with a linear transformation of a tanh (learnable $$\gamma$$ and $$\beta$$) and a new learnable parameter $$\alpha$$ that scales the inputs. This results in:
 
 $$\text{DyT}(x) = \gamma * \text{tanh}(\alpha x) + \beta$$
 
@@ -23,7 +23,7 @@ Given how established and important normalization layers have always been, I fou
 
 # The experiment
 
-I trained two smaller Vision-Transformer-like models from scratch: one using **LayerNorm** and the other using **DyT**. In both cases, the normalization layers were placed in the pre-norm blocks of MHA and the FFN within the transformer blocks, as well as right before the final linear projection. 
+I trained two smaller Vision-Transformer-like models from scratch: one using **LayerNorm** and the other using **DyT**. In both cases, the normalization layers were placed in the pre-norm within the transformer blocks (both MHA and FFN) and right before the final linear projection. 
 
 > The code of the ViTs follows [timm](https://github.com/huggingface/pytorch-image-models/blob/main/timm/models/vision_transformer.py#L425) and [lucidrain](https://github.com/lucidrains/vit-pytorch/blob/main/vit_pytorch/vit.py) implementations as reference and [is available here](https://github.com/guillesanbri/zoo/blob/main/models/vit.py).
 
@@ -106,17 +106,39 @@ As the paper itself highlights, results can vary depending on the model size, da
 
 # Time analysis
 
-WIP 🚧
+When training our models, the DyT variant took a bit longer to complete 500 epochs compared to the LayerNorm version (14.8h vs 13.5h), roughly a ~10% difference. I was expecting the tanh version to be slightly *faster*, so I decided to dig a bit more. There are a couple of things to take into account when looking at the paper efficiency results.
+
+- They actually measure training/inference time in Llama2, which means comparing against RMSNorm instead of LayerNorm.
+- Both the sequence length and the embeddings are significantly larger in the case of the Llama2 results they present (seq_length=4096, hidden_size=4096) compared to our ViTs (seq_length=65, hidden_size=768). 
+
+Let's take a look at some inference micro-benchmarks on the isolated modules (averaged over 100k runs):
+
+| Seq. Length, Hidden size      | RMSNorm (ms) | LayerNorm (ms) | DyT (ms)  |
+|:-----------------------------:|:------------:|:--------------:|:---------:|
+| (65, 768)                     | 0.112        | **0.053**      | 0.075     |
+| (4096, 4096)                  | 1.936        | 0.805          | **0.535** |
+
+The table pieces the differences together. For smaller dimensions like in our ViT, LayerNorm is still faster than DyT. However, as these dimensions grow to Llama-like sizes, DyT becomes faster and eventually surpasses LayerNorm. Interestingly, in both cases RMSNorm is still slower than the two other layers (which is consistent with the paper). 
+
+These results raise yet another question: **How can RMSNorm be slower than LayerNorm?** 
+
+RMSNorm is theoretically simpler than LayerNorm (it avoids calculating the mean) so it should be faster. My guess here is that LayerNorm benefits from more optimized and more mature kernels which are better tuned, use fused operators that RMSNorm does not, etc.
 
 ***
 <!--
-# Extra: Visualizing the layer norm mappings (TODO)
+# Extra: Visualizing the layer norm mappings? (TODO?)
 
 ***
 -->
-# Discussion and food for thought
+# Conclusions
 
-WIP 🚧
+The experiments showed that models using DyT can be trained comparably to those with standard LayerNorm, which is already a success! On the other hand, the accuracy in these small scale setups took a dent when replacing these layers. The way I see it, whether or not to use these modules is something to try and test based on the model depth and scale, instead of blindly assuming that they are a better option.
+
+When it comes to efficiency, while DyT is a very promising alternative and demonstrates speedups at large scales, using a basic implementation for smaller sequences and embedding dimensions might currently hinder performance slightly compared to using LayerNorm. That being said, it's reasonable to expect that if DyT gets wider community adoption, optimized kernels will emerge, making it competitive or faster across a wider range of scales.
+
+***
+
+Thanks for reading!
 
 ***
 
