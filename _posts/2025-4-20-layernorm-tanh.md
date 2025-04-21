@@ -53,7 +53,7 @@ Both models were trained on [tiny-imagenet-200](http://cs231n.stanford.edu/tiny-
 
 The ViT models are configured to be relatively small to be trained on less powerful hardware. They have 4 heads, 6 encoder blocks, and an embedding dimension of 768. Images were scaled to 128x128 with a patch size of 16x16. Arguably, the patches are a bit too big for this image size. A 8x8 patch would probably have been a better choice to capture more detail, but my GPU asked for mercy with a not-so-subtle OOM error.
 
-The [training script is also available in GitHub](TODO), but here is a quick summary:
+The [training script is also available in GitHub](https://github.com/guillesanbri/zoo/blob/main/train_imagenet.py), but here is a quick summary:
 - Number of epochs: 500
 - Batch size: 256
 - Optimizer: AdamW
