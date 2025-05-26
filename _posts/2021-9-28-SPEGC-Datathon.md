@@ -3,7 +3,7 @@ layout: post
 title: "SPEGC Ocean Datathon 1st Prize Solution"
 tags: [Deep Learning, Computer Vision]
 folder: spegc-datathon
-pinned: true
+pinned: false
 toc: true
 ---
 
