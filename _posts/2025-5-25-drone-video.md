@@ -6,17 +6,7 @@ folder: drone-video
 pinned: true
 toc: true
 ---
-<!--
-- [x] Clean up and upload the code
-- [x] Record video
-- [x] Update the GIF in both places
-- [ ] Differences in frames
-- [x] Change `inline code` CSS
-- [x] Finish JPEG section
-- [ ] Copy messages or screenshot them
-- [x] Review text, proofread
-- [ ] Deal with any pending TODO
--->
+
 ***
 
 Cheap drones often stream video and communicate over WiFi. The protocol is rarely documented, but we can reverse engineer it! This post covers how I went from raw packets flying through the air to live drone footage showing up in OpenCV.
