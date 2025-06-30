@@ -10,7 +10,7 @@ permalink: /about/
 
 Hey! I'm Guillermo, a research engineer focused on deep learning and computer vision, especially when they are applied to real-world systems. My main interests are efficient inference, self-supervised learning, edge deployment, robotics, environmental sensing, and a long etcetera. I like working on hard problems, pushing boundaries a little further, and learning along the way.
 
-Tech aside (tricky) I'm into [long-distance running](https://www.strava.com/athletes/135079462) and traveling.
+Tech aside (tricky) I'm into [long-distance running](https://www.strava.com/athletes/135079462) and classical art.
 
 ### Background
 
