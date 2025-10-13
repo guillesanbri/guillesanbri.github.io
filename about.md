@@ -18,6 +18,8 @@ I studied Industrial Electronics and Automation Engineering, here I focused on r
 
 Recently, I was a Founding Machine Learning Engineer at [Unify.ai](https://unify.ai/) (YC-backed), where we built a [framework-agnostic graph compiler for tensor-based code](https://neurips.cc/virtual/2023/80704), worked on efficient inference, and developed infrastructure for LLMs (routing, APIs, deployment, observability). Before that, I worked on image segmentation and object detection models for medical robotics.
 
+Now I'm working as a Deep Learning and Computer Vision Engineer at [Indra](https://www.indracompany.com/en/defence-security), mostly doing R&D for military vehicles.
+
 ***
 
 ### Contact
