@@ -11,7 +11,9 @@ toc: true
 
 Cheap drones often stream video and communicate over WiFi. The protocol is rarely documented, but we can reverse engineer it! This post covers how I went from raw packets flying through the air to live drone footage showing up in OpenCV.
 
-<div style="width:100%;height:0;padding-bottom:58%;position:relative;"><iframe src="https://giphy.com/embed/xAzyGWCkWXF4kLFX7g" width="100%" height="100%" style="position:absolute;border-radius: 0.25rem;" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div>
+<!-- Converted from GIF to WebM with: ffmpeg -i drone.gif -c:v libvpx-vp9 -b:v 0 -crf 35 -an -loop 0 drone.webm -->
+<video src="./../webm/drone.webm" style="width:100%;border-radius:0.25rem;" autoplay loop muted playsinline></video>
+
 
 I've wanted to build a drone to run some SLAM/DL algos for a while. A few days ago I saw [Marshall Richards reversing the video and control commands of a toy drone](https://x.com/marshallrichrds/status/1922508365713846678), which was very inspiring. I figured it would be a good learning exercise and a quick way to test models for the time being. Props to him!
 
@@ -133,7 +135,8 @@ In conclusion, initializing the video stream first and then sending these "next 
 
 I spoiled it at the beginning, but here is a video of the drone sending the live feed of its camera to the computer, along with some simple feature detection.
 
-<div style="width:100%;height:0;padding-bottom:58%;position:relative;"><iframe src="https://giphy.com/embed/xAzyGWCkWXF4kLFX7g" width="100%" height="100%" style="position:absolute;border-radius: 0.25rem;" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div>
+<!-- Converted from GIF to WebM with: ffmpeg -i drone.gif -c:v libvpx-vp9 -b:v 0 -crf 35 -an -loop 0 drone.webm -->
+<video src="./../webm/drone.webm" style="width:100%;border-radius:0.25rem;" autoplay loop muted playsinline></video>
 
 ***
 
