@@ -38,7 +38,7 @@ The competition posed two main challenges and a set of "minor" challenges.
 
 ### Main challenge #1
 
-Using the first subset of the dataset, a classification model had to be trained to classify the floor in a given image. The floor type options were sandy, muddy, muddy-sand and reef. Reef was quite different from the other three, while these others main difference was the granularity of the particles of the floor.
+Using the first subset of the dataset, a classification model had to be trained to classify the floor in a given image. The floor type options were sandy, muddy, muddy-sand and reef. Reef was quite different from the other three, while their main difference was the granularity of the particles of the floor.
 
 ### Main challenge #2
 
@@ -124,7 +124,7 @@ After choosing the model and the hyperparameters, we trained the model again usi
 
 Due to the time limitations of the competition, once we had the model and preprocessing for the first challenge working we decided to avoid looking for new architectures and reused all the code for training and inference we had for the floor type classification. The only change we made was in the output layer of the network to change the four output neurons to five (as the second challenge had five classes). After changing this last layer, we proceeded to repeat the process of doing transfer learning with the ResNet152v2 trained on Imagenet and fine tuning the whole network. This time, we got a weighted accuracy of 0.963 in the validation split of the elements dataset.
 
-One thing that went over our heads during the competition was using the model trained with the first dataset as the base for transfer learning in this task. It would had been a good experiment to try.
+One thing that went over our heads during the competition was using the model trained with the first dataset as the base for transfer learning in this task. It would have been a good experiment to try.
 
 The final model was then trained on the entire elements dataset (train + val) in a similar fashion to the previous model.
 

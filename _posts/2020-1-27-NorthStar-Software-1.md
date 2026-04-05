@@ -42,11 +42,11 @@ There are a few options to track the headset in space, some of them (the most us
 | Vive tracker                   |      Yes      |  No**  |   No   |
 
 
-*While not oficially supported, the [Intel page](https://www.intelrealsense.com/tracking-camera-t265/) states that it is possible to compute a suboptimal dense depth. This is left as an exercise for the reader.
+*While not officially supported, the [Intel page](https://www.intelrealsense.com/tracking-camera-t265/) states that it is possible to compute a suboptimal dense depth. This is left as an exercise for the reader.
 
 **To use a Vive tracker, you must have a Lighthouse system.
 
-I decided to use an Intel Realsense T265 device, mainly because of it's price and my needs, so that is what we will be integrating in Unity next.
+I decided to use an Intel Realsense T265 device, mainly because of its price and my needs, so that is what we will be integrating in Unity next.
 
 ***
 

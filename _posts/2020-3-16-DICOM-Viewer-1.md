@@ -9,7 +9,7 @@ toc: true
 
 ***
 
-This post will cover some of the features of a Virtal Reality DICOM file viewer implemented in Unity3D. It uses VRTK4 as a base for the VR part and EvilDICOM to manage the DICOM part of things.
+This post will cover some of the features of a Virtual Reality DICOM file viewer implemented in Unity3D. It uses VRTK4 as a base for the VR part and EvilDICOM to manage the DICOM part of things.
 
 <div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/iR64nLS59bP8ZalKLK" width="100%" height="100%" style="position:absolute;border-radius: 0.25rem;"  frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div>
 
@@ -17,7 +17,7 @@ This post will cover some of the features of a Virtal Reality DICOM file viewer 
 
 # What is DICOM?
 
-DICOM (Digital Imaging and Communication On Medicine) is the standard for the communication and management of medical imaging information and related data. This means that DICOM files store much more than pixel data, they store patient info, clinical trial info, etc. This post will focus on the file type, more precisly, on Computed Tomography scans and Magnetic Resonance imaging, but keep in mind that DICOM is a much bigger standard that covers a lot of things like storage or network protocols.
+DICOM (Digital Imaging and Communications in Medicine) is the standard for the communication and management of medical imaging information and related data. This means that DICOM files store much more than pixel data, they store patient info, clinical trial info, etc. This post will focus on the file type, more precisely, on Computed Tomography scans and Magnetic Resonance imaging, but keep in mind that DICOM is a much bigger standard that covers a lot of things like storage or network protocols.
 
 ***
 
@@ -43,7 +43,7 @@ Developing a medical application that complies with DICOM ensures interoperabili
 
 ***
 
-* **Asynchronous generation**: The load/generation of the 3D model is performed asyncronously, allowing the computer to process big files while keeping the virtual reality experience frame-drop free to ensure comfort.
+* **Asynchronous generation**: The load/generation of the 3D model is performed asynchronously, allowing the computer to process big files while keeping the virtual reality experience frame-drop free to ensure comfort.
 
 ***
 

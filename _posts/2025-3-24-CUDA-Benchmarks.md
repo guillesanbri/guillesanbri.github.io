@@ -59,7 +59,7 @@ I won't go into detail about the statistics we should measure here. We will disc
 
 The focus of these experiments is on the *relative differences* between benchmarking approaches. Execution times will vary across different GPUs, driver versions, and system configurations, but the patterns between naive and proper measurement techniques should remain consistent. I'm getting ahead of myself, but no matter your setup, asynchronous execution will produce misleadingly low measurements and cache effects will sometimes artificially boost performance when reusing data.
 
-However, for completeness: I'm running these experiments using a desktop RTX 3070 GPU and a AMD Ryzen 7 3800x CPU. The GPU drivers are 565.57.01 and the CUDA version is 12.7.
+However, for completeness: I'm running these experiments using a desktop RTX 3070 GPU and an AMD Ryzen 7 3800x CPU. The GPU drivers are 565.57.01 and the CUDA version is 12.7.
 
 <!--
 <div class="note">
@@ -439,7 +439,7 @@ We can see various things in the graph. First, flushing the L2 cache consistentl
 
 Looking at the hardware specifications of the RTX 3070, we can see that it has 4MB of L2 cache. A single 1024×1024 matrix of 32-bit floats takes 4MB of storage (1,048,576 elements × 4 bytes). We are using three matrices (A, B, and C), with a working set significantly larger than the cache capacity. As matrix size grows beyond what the L2 cache can effectively manage, the benefit of cached data between launches diminishes because each kernel execution essentially overwrites the cache with its own access patterns.
 
-It's worth noting that this memory-bound kernel is more sensitive to cache effects than a compute-bound kernel would. A more optimized implementation (using techniques like tiling or shared memory) would probably show different results, most likely with smaller differences in execution time..
+It's worth noting that this memory-bound kernel is more sensitive to cache effects than a compute-bound kernel would. A more optimized implementation (using techniques like tiling or shared memory) would probably show different results, most likely with smaller differences in execution time.
 
 <!-- TODO
 

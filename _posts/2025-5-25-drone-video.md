@@ -85,7 +85,7 @@ After removing the headers and concatenating the payloads from all the messages,
 
 - Are there any JPEG markers (SOI, SOF)? Not really.
 - Is the PNG magic number present? Nope.
-- Do we have H.265/H.265 NAL identifiers? Negative.
+- Do we have H.264/H.265 NAL identifiers? Negative.
 - Is this just raw color data?
 
 <figure align="center">
@@ -93,7 +93,7 @@ After removing the headers and concatenating the payloads from all the messages,
   <figcaption>Hint: It wasn't raw color data</figcaption>
 </figure>
 
-The size of the concatenated payloads (~15kB) basically confirms that the data is compressed. Given the JPEG hints from `objdump`, it didn't seem crazy that the drone was omiting the headers to reduce data transmission, and that it was possible to construct a valid image by adding the corresponding headers to the blob.
+The size of the concatenated payloads (~15kB) basically confirms that the data is compressed. Given the JPEG hints from `objdump`, it didn't seem crazy that the drone was omitting the headers to reduce data transmission, and that it was possible to construct a valid image by adding the corresponding headers to the blob.
 
 ## MJPEG and JPEG headers
 

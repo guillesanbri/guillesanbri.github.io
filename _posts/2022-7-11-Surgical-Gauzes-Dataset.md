@@ -37,7 +37,7 @@ As specific conditions are extremely hard to fabricate during real surgeries, th
   </div>
 </div>
 
-Once the videos were correctly recorded, we selected a subset of them (18 out of the 30 videos with gauzes) and sampled them every 10 frames, which resulted in 4003 images. These images, were later hand annotated with masks that correspond to the surgical gauzes, enabling the training of supervised models, both for segmentation and for object detection (as it is trivial to calculate bounding boxes once the segmentation masks are available). Again, some samples from the annotated dateset are shown below (outline of the mask drawn in green):
+Once the videos were correctly recorded, we selected a subset of them (18 out of the 30 videos with gauzes) and sampled them every 10 frames, which resulted in 4003 images. These images, were later hand annotated with masks that correspond to the surgical gauzes, enabling the training of supervised models, both for segmentation and for object detection (as it is trivial to calculate bounding boxes once the segmentation masks are available). Again, some samples from the annotated dataset are shown below (outline of the mask drawn in green):
 
 <div class="container">
   <div class="row">

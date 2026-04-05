@@ -41,7 +41,7 @@ Furthermore, Docker offers a lot more than an environment. Due do its ecosystem,
 
 # Step 1: Installing Docker
 
-If you haven't hear about Docker before, take a look at this short [intro to Docker](https://www.youtube.com/watch?v=Gjnup-PuquQ) from *Fireship* to grasp the basic concepts and come back after watching the video a couple of times, I'll wait.
+If you haven't heard about Docker before, take a look at this short [intro to Docker](https://www.youtube.com/watch?v=Gjnup-PuquQ) from *Fireship* to grasp the basic concepts and come back after watching the video a couple of times, I'll wait.
 
 Welcome back! The first thing you have to do is install Docker in your computer, I will go over the commands here, but it's always preferable that you follow the [official documentation](https://docs.docker.com/engine/install/ubuntu/). **These instructions are for Ubuntu**. You can also install it manually with the .deb file if you prefer (notice that updates will have to also be done manually).
 
@@ -187,7 +187,7 @@ docker run --gpus all --rm -it -p 8888:8888 -v $(pwd):/tf/notebooks  tensorflow/
 
 # Step 3: Dockerfiles, Images, Containers and commands
 
-I have some templates that I will share and explain here, a Dockerfile and two bash script, one to build a image from a Dockerfile and another to run an image as a container. You can obviously modify them to fit your needs.
+I have some templates that I will share and explain here, a Dockerfile and two bash scripts, one to build an image from a Dockerfile and another to run an image as a container. You can obviously modify them to fit your needs.
 
 ### Sample Dockerfile
 
@@ -273,7 +273,7 @@ If we wanted to create a container of the previously built image, we could simpl
 
 There are a few flags in this command:
 
-- **`--gpu alls`**: This will assign all available GPUs to the Docker container. If you want to specify a GPU, you can use the [device parameter.](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/user-guide.html)
+- **`--gpus all`**: This will assign all available GPUs to the Docker container. If you want to specify a GPU, you can use the [device parameter.](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/user-guide.html)
 - **`--rm`**: The rm flag cleans up the container and removes its filesystem after exiting. This means that changes inside the container will disappear (ie. a module installed with pip using the container terminal). Files changed in the binded directory **won't** be affected.
 - **`--it`**: Starts the container in interactive mode (now you can interact with /bin/bash of the container).
 - **`--name ${1}_container`**: Simply assigns the name tag_container to the container for easier reference, where tag is the name given to the image using the `--tag` flag in the build command.

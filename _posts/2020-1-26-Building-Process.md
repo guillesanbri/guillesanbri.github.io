@@ -8,7 +8,7 @@ toc: true
 ***
 
 Once we have the optics, electronics, mechanical parts, and all the 3D-printed parts, we are ready to start building the headset.
-To do so, we will follow the [Assembly drawing from the NortStar repo](https://github.com/leapmotion/ProjectNorthStar/blob/master/Mechanical/Assm%20Drawing%20North%20Star%20Release%203.pdf).
+To do so, we will follow the [Assembly drawing from the NorthStar repo](https://github.com/leapmotion/ProjectNorthStar/blob/master/Mechanical/Assm%20Drawing%20North%20Star%20Release%203.pdf).
 
 ***
 
@@ -22,7 +22,7 @@ These parts were updated not long ago, so if you have downloaded them recently, 
 
 ![Reinforced piece](./../images/building-process/IMG_20200125_183333.jpg)
 
-When assembling this parts, take into account that even if the assembly drawing doesn't show it, you have to put the welding headgear between the hinge parts.
+When assembling these parts, take into account that even if the assembly drawing doesn't show it, you have to put the welding headgear between the hinge parts.
 
 ![Welding headgear assembly](./../images/building-process/IMG_20200119_114613.jpg)
 
@@ -99,11 +99,11 @@ This build is the 3.1 version, so we don't need this part.
 
 ![113-000 and 114-00 pieces](./../images/building-process/IMG_20200119_135745.jpg)
 
-**Spoiler: You will probably want to dissasemble the left one (113-000) in a few steps, so don't waste time screwing now.**
+**Spoiler: You will probably want to disassemble the left one (113-000) in a few steps, so don't waste time screwing now.**
 
 You will need to take out the endcaps later to assemble everything together, so don't worry about them now.
 
-Again, this pieces have been updated, the endcap (now 110-006) looks like this:
+Again, these pieces have been updated, the endcap (now 110-006) looks like this:
 
 ![Updated endcap](./../images/building-process/Cura-110-006.jpg)
 
@@ -133,7 +133,7 @@ Once the ribbons are ready, they should look like this:
 
 ![Screen ribbon](./../images/building-process/IMG_20200119_165826.jpg)
 
-Now, remember to remove the supports from the screen trays and then slide both screen inside.
+Now, remember to remove the supports from the screen trays and then slide both screens inside.
 
 ![Screen ribbon](./../images/building-process/IMG_20200119_170617.jpg)
 
@@ -147,7 +147,7 @@ Explanation time! There are more pieces than necessary in the picture above, 120
 
 If you want to go 6 dof, the modular lid will allow you to use the MultiMount or the Vive Tracker pieces. 
 
-+ The MultiMount is a piece that (as far as I know) Noazark uploaded to the [NorthStar discord server](https://discordapp.com/invite/ATPm9Fy) that allows you to add an Intel T265 or a Occipital Structure Core sensor to the headset. The .stl file is pinned in the channel #build-tweaking of the server.
++ The MultiMount is a piece that (as far as I know) Noazark uploaded to the [NorthStar discord server](https://discordapp.com/invite/ATPm9Fy) that allows you to add an Intel T265 or an Occipital Structure Core sensor to the headset. The .stl file is pinned in the channel #build-tweaking of the server.
 + If you want to use a Vive Tracker, you can find the piece in the [North Star mechanical folder in the repo](https://github.com/leapmotion/ProjectNorthStar/tree/master/Mechanical/).
 
 Let's continue with the build now, if you have decided to go with the modular lid (wise decision), you will have to do four heated inserts in the Simplified Optics Main Body.
@@ -158,7 +158,7 @@ Next, let's attach parts 113-000 and 114-000 (Rot. Slide Mounts) to the main bod
 
 ![113-000 and 114-000 main body connection](./../images/building-process/IMG_20200119_173102.jpg)
 
-Then, screw the Simplifies Electronics Bay to the main body. After that, you have to connect the power cables of the driver, make sure to connect the red wire to the pin that has a positive sign above. It should look like this:
+Then, screw the Simplified Electronics Bay to the main body. After that, you have to connect the power cables of the driver, make sure to connect the red wire to the pin that has a positive sign above. It should look like this:
 
 ![Power cables](./../images/building-process/IMG_20200119_173231.jpg)
 
@@ -209,7 +209,7 @@ The only thing we have left is to place the Facial Interface (115-002 in the .st
 
 ![115-002 and foam rectangle](./../images/building-process/IMG_20200126_130152.jpg)
 
-I used the foam piece left from the [Smart prototyping](https://www.smart-prototyping.com/AR-VR-MR-XR) kit by cutting it to size and using a stripe of double sided tape.
+I used the foam piece left from the [Smart prototyping](https://www.smart-prototyping.com/AR-VR-MR-XR) kit by cutting it to size and using a strip of double sided tape.
 
 ![115-002 completed](./../images/building-process/IMG_20200126_131538.jpg)
 

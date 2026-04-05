@@ -9,7 +9,7 @@ folder: scale-invariant-loss
 
 ***
 
-Over the last few months I have been working in (monocular) depth estimation for my Master's Thesis. When I started digging into commonly used loss functions, I came across the Scale Invariant Log (SiLog) Loss. This function was presented by Eigen et al. in *Depth Map Prediction from a Single Image using a Multi-Scale Deep Network* ([arXiv](https://arxiv.org/pdf/1406.2283.pdf)) and it is extensively used (usually in conjunction with additional scale-dependant terms) to train and evaluate depth prediction models. The catch about this function is that the scale of the predicted output does not affect its magnitude. When I first read that, I wanted to take a look at the mathematical proof of the scale invariance, but could not find any already written. Therefore, this post tries to relieve the mathematical itch of those in my position.
+Over the last few months I have been working on (monocular) depth estimation for my Master's Thesis. When I started digging into commonly used loss functions, I came across the Scale Invariant Log (SiLog) Loss. This function was presented by Eigen et al. in *Depth Map Prediction from a Single Image using a Multi-Scale Deep Network* ([arXiv](https://arxiv.org/pdf/1406.2283.pdf)) and it is extensively used (usually in conjunction with additional scale-dependant terms) to train and evaluate depth prediction models. The catch about this function is that the scale of the predicted output does not affect its magnitude. When I first read that, I wanted to take a look at the mathematical proof of the scale invariance, but could not find any already written. Therefore, this post tries to relieve the mathematical itch of those in my position.
 
 This should be a short post, but you can jump straight to the proof clicking [here](#the-actual-mathematical-proof).
 
@@ -26,7 +26,7 @@ Before going into the mathematical detail the meaning of scale invariance should
 
 What a scale invariant loss function does is calculate an error magnitude that does not take into account the scale discrepancy between the ground truth annotation and the output predicted by our model. It only considers the relative depth of each set of values.
 
-One last thing to mention is that the previously mentioned paper didn't actually proposed a totally scale-invariant loss. It proposed a function that can be tweaked to change the influence of the scale. The original equation is:
+One last thing to mention is that the previously mentioned paper didn't actually propose a totally scale-invariant loss. It proposed a function that can be tweaked to change the influence of the scale. The original equation is:
 
 $$
 L(\hat{d}, d) = \frac{1}{n}\sum_{p} (\ln{\hat{d_p}} - \ln{d_p})^2 - \frac{\lambda}{n^2} \left( \sum_{p} (\ln{\hat{d_p}} - \ln{d_p}) \right)^2 \\

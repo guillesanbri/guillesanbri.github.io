@@ -25,7 +25,7 @@ Given how established and important normalization layers have always been, I fou
 
 I trained two smaller Vision-Transformer-like models from scratch: one using **LayerNorm** and the other using **DyT**. In both cases, the normalization layers were placed in the pre-norm within the transformer blocks (both MHA and FFN) and right before the final linear projection. 
 
-> The code of the ViTs follows [timm](https://github.com/huggingface/pytorch-image-models/blob/main/timm/models/vision_transformer.py#L425) and [lucidrain](https://github.com/lucidrains/vit-pytorch/blob/main/vit_pytorch/vit.py) implementations as reference and [is available here](https://github.com/guillesanbri/zoo/blob/main/models/vit.py).
+> The code of the ViTs follows [timm](https://github.com/huggingface/pytorch-image-models/blob/main/timm/models/vision_transformer.py#L425) and [lucidrains](https://github.com/lucidrains/vit-pytorch/blob/main/vit_pytorch/vit.py) implementations as reference and [is available here](https://github.com/guillesanbri/zoo/blob/main/models/vit.py).
 
 The code for DyT is quite straightforward:
 
@@ -51,7 +51,7 @@ Both models were trained on [tiny-imagenet-200](http://cs231n.stanford.edu/tiny-
 
 > For some reason that escapes me, the validation and the train directories in tiny-imagenet have different structures, so you will have to (1) reorganize the validation files if you want to use PyTorch's `ImageFolder` or (2) write a custom dataset class for them.
 
-The ViT models are configured to be relatively small to be trained on less powerful hardware. They have 4 heads, 6 encoder blocks, and an embedding dimension of 768. Images were scaled to 128x128 with a patch size of 16x16. Arguably, the patches are a bit too big for this image size. A 8x8 patch would probably have been a better choice to capture more detail, but my GPU asked for mercy with a not-so-subtle OOM error.
+The ViT models are configured to be relatively small to be trained on less powerful hardware. They have 4 heads, 6 encoder blocks, and an embedding dimension of 768. Images were scaled to 128x128 with a patch size of 16x16. Arguably, the patches are a bit too big for this image size. An 8x8 patch would probably have been a better choice to capture more detail, but my GPU asked for mercy with a not-so-subtle OOM error.
 
 The [training script is also available in GitHub](https://github.com/guillesanbri/zoo/blob/main/train_imagenet.py), but here is a quick summary:
 - Number of epochs: 500
