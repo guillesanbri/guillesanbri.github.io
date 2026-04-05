@@ -5,9 +5,8 @@
 // IMPORTS
 //
 
-@import "reset";
-@import "variables";
-// Syntax highlighting @import is at the bottom of this file
+@use "reset";
+@use "variables" as *;
 
 /**************/
 /* BASE RULES */
@@ -23,7 +22,7 @@ html {
 
 body {
 	background: #FAFAFA;
-  font: 18px/1.4 $body-font;
+  font: 18px/1.5 $body-font;
   color: $darkGray;
   height: 100%;
   display: flex;
@@ -754,8 +753,3 @@ tr:hover {
     aspect-ratio: 1 / 1;
   }
 }
-
-// Settled on moving the import of syntax highlighting to the bottom of the CSS
-// ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
-// @import "highlights";
-@import "svg-icons";
