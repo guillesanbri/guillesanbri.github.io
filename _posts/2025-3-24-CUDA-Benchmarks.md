@@ -5,6 +5,8 @@ tags: [CUDA]
 folder: CUDA-Benchmarks
 pinned: false
 toc: true
+accent_dark: "#21a179"
+accent_light: "#edf7ee"
 ---
 
 {% include mathjax.html %}
@@ -15,11 +17,7 @@ toc: true
 
 The majority of resources online simply tell you to do x or y, but I want to see __*the numbers*__. If you are still reading this, you probably do as well, look at us!
 
-<div class="note">
-<p>
-I'm afraid this won't be NVIDIA Nsight level. I'm just running some tests ¯\_(ツ)_/¯
-</p>
-</div>
+> I'm afraid this won't be NVIDIA Nsight level. I'm just running some tests ¯\\\_(ツ)\_/¯
 
 The code will be C++ but most if not all of the things we will be going over most likely apply to any GPU programming framework.
 
@@ -49,11 +47,7 @@ Before you open a new tab with a podcast, [here](https://github.com/guillesanbri
 
 The experiments will start with a very naive and straight-out wrong way to measure the performance of kernels. After that, we will be going over different modifications to the benchmarking code and the overall system, gradually increasing the **accuracy** and **stability** of the timings.
 
-<div class="note">
-<p>
-<b>Stability</b>: As mentioned in [1], we want <i>stable</i>, and not <i>peak-performance</i> measurements. We will see how different factors affect the repeatability of the measurements, and we will try to mitigate them when possible.
-</p>
-</div>
+> **Stability**: As mentioned in [1], we want *stable*, and not *peak-performance* measurements. We will see how different factors affect the repeatability of the measurements, and we will try to mitigate them when possible.
 
 I won't go into detail about the statistics we should measure here. We will discuss that [in this other section](#statistics).
 
@@ -384,11 +378,7 @@ As always, [link to the full code here](https://github.com/guillesanbri/cuda-sni
 
 We are now running the same kernel and input data thousands of times to compute statistics, and we might be taking unwanted help from the cache. Sadly, we don't usually have the same inputs when deploying to production. Let's take a look at how the cache affects our measures.
 
-<div class="note">
-<p>
-CUDA GPUs have multiple caches. For example, L1 cache is specific to each streaming multiprocessor (SM), and L2 cache is shared across all SMs. We will focus on the L2 cache. L1 caches are much smaller, so we can expect their impact on the benchmarking to be minimal with this kind of data.
-</p>
-</div>
+> CUDA GPUs have multiple caches. For example, L1 cache is specific to each streaming multiprocessor (SM), and L2 cache is shared across all SMs. We will focus on the L2 cache. L1 caches are much smaller, so we can expect their impact on the benchmarking to be minimal with this kind of data.
 
 ### Flushing the cache
 

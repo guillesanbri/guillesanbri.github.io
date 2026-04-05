@@ -7,7 +7,17 @@ layout: default
 {% assign main_class = "main-content" %}
 {% endif %}
 
-<div class=" {{ pw_class }} ">
+{% assign accent_light = page.accent_light | default: "#eff2f7" %}
+{% assign accent_dark = page.accent_dark | default: "#35A7FF" %}
+
+<style>
+  .post-accent {
+    --accent-light: {{ accent_light }};
+    --accent-dark: {{ accent_dark }};
+  }
+</style>
+
+<div class="post-accent {{ pw_class }}">
     {% if page.toc %}
       <aside class="toc-sidebar">
         <div class="toc-container">
