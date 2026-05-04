@@ -3,7 +3,7 @@ layout: post
 title: "Tanh as LayerNorm in Small Vision Transformers"
 tags: [Computer Vision, Deep Learning]
 folder: tanh
-pinned: true
+pinned: false
 toc: true
 ---
 
