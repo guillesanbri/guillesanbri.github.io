@@ -529,6 +529,27 @@ code.highlighter-rouge {
   font-size: 90%;
 }
 
+/* Code blocks */
+.highlight pre,
+pre.highlight,
+figure.highlight pre,
+div.highlight pre,
+pre[class*="language-"] {
+  font-size: 15px;
+  line-height: 1.35;
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+}
+
+.highlight pre *,
+pre.highlight *,
+figure.highlight pre *,
+div.highlight pre *,
+pre[class*="language-"] * {
+  font-size: inherit !important;
+  line-height: inherit !important;
+  font-family: inherit !important;
+}
+
 /* General table styling */
 table {
   width: 100%;
