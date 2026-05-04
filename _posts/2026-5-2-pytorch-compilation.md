@@ -362,7 +362,7 @@ Break Reasons:
       <FrameSummary file /tmp/ipykernel_608/3477535583.py, line 11 in forward>
 ```
 
-Which brings up the conditional break.
+Which brings up the if-statement break.
 
 ### Guards
 
@@ -471,7 +471,7 @@ y = torch.randn(1024, 64, device="cuda")
 out = numpy_fn(x, y)  # torch (cuda) tensor out
 ```
 
-Thanks to Inductor, the captured graph here ends up running as Triton kernels on the GPU.
+Thanks to the `torch.compile` stack, the captured graph here ends up running as Triton kernels on the GPU.
 
 ---
 
