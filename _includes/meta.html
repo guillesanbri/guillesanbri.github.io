@@ -18,4 +18,7 @@
     <meta property="twitter:title" content="{{ page.title }}" />
     {% endif %}
 
-    <meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/images/{{ page.folder }}/index.png">
+    <meta property="og:url" content="{{ page.url | absolute_url }}" />
+    <meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/images/{{ page.folder }}/thumbnail.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="{{ site.url }}{{ site.baseurl }}/images/{{ page.folder }}/thumbnail.png" />
