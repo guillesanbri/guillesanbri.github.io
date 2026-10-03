@@ -524,9 +524,19 @@ hr {
 }
 
 /* Style only inline code (not code blocks) */
-code.highlighter-rouge {
-  padding: 0.1rem 0.4rem !important;
-  font-size: 90%;
+:not(pre) > code.highlighter-rouge {
+  padding: 0.08em 0.36em;
+  font-size: 0.86em;
+  color: #2b2b2b;
+  background: rgba(27, 31, 36, 0.05);
+  border: 1px solid rgba(27, 31, 36, 0.16);
+  border-radius: 4px;
+  text-shadow: none;
+  white-space: nowrap;
+
+  @include mobile {
+    white-space: normal;
+  }
 }
 
 /* Code blocks */
