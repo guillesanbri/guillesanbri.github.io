@@ -73,4 +73,5 @@ exclude:
   - LICENSE
   - README.md
   - CNAME
+  - new-post.sh
   - make-thumbnails.py
