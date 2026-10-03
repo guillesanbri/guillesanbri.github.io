@@ -19,6 +19,10 @@
     {% endif %}
 
     <meta property="og:url" content="{{ page.url | absolute_url }}" />
-    <meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/images/{{ page.folder }}/thumbnail.png" />
+    {% if page.folder %}
+    <meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/images/{{ page.folder }}/thumbnail.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="{{ site.url }}{{ site.baseurl }}/images/{{ page.folder }}/thumbnail.png" />
+    <meta name="twitter:image" content="{{ site.url }}{{ site.baseurl }}/images/{{ page.folder }}/thumbnail.jpg" />
+    {% endif %}
