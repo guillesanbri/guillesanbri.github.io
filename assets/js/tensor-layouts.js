@@ -368,17 +368,30 @@ function initPerm3() {
 }
 
 /* ---------- 4c. more axes: an image cut into patches, one magnitude per axis ---------- */
-// five axes drawn by position: axis 0 across the blocks, axes 1 and 2 going down (big steps, small steps),
-// axes 3 and 4 going across (big steps, small steps)
-function lay5(tn, c, mg, bgap) {
-  const [nb, va, vi, ha, hi] = tn.shape, mv = va > 1 && vi > 1 ? mg : 0, mh = ha > 1 && hi > 1 ? mg : 0;
-  const bw = ha * hi * c + (ha - 1) * mh, bh = va * vi * c + (va - 1) * mv, pos = new Map(), items = [];
-  for (let b = 0; b < nb; b++) for (let i = 0; i < va; i++) for (let j = 0; j < vi; j++) for (let k = 0; k < ha; k++) for (let l = 0; l < hi; l++) {
-    const e = tn.at([b, i, j, k, l]), x = b * (bw + bgap) + (k * hi + l) * c + k * mh, y = (i * vi + j) * c + i * mv;
-    pos.set(e, [x, y]); items.push({ e, x, y, idx: [b, i, j, k, l] });
+// five axes drawn by position: dirs tells every axis to go across ('h') or down ('v'), and within each direction
+// the axes nest from big steps (the first one) to small steps (the last one); gaps[k] separates two steps of axis k
+function lay5(tn, c, dirs, gaps) {
+  const sh = tn.shape;
+  const steps = d => {    // per level: how far one step moves, and how much one full run of that level covers
+    const ks = sh.map((n, k) => k).filter(k => dirs[k] === d), ext = [], step = [];
+    let inner = c;
+    for (let j = ks.length - 1; j >= 0; j--) {
+      const n = sh[ks[j]], gap = inner > c ? gaps[ks[j]] : 0;   // no gaps between single cells
+      step[j] = inner + gap; ext[j] = n * inner + (n - 1) * gap; inner = ext[j];
+    }
+    return { ks, ext, step };
+  };
+  const Hz = steps('h'), V = steps('v'), pos = new Map(), items = [], idx = sh.map(() => 0);
+  const along = D => D.ks.reduce((s, k, j) => s + idx[k] * D.step[j], 0);
+  for (let n = 0; n < tn.size; n++) {
+    const e = tn.at(idx), x = along(Hz), y = along(V);
+    pos.set(e, [x, y]); items.push({ e, x, y, idx: idx.slice() });
+    for (let k = sh.length - 1; k >= 0; k--) { if (++idx[k] < sh[k]) break; idx[k] = 0; }
   }
-  return { pos, items, bw, bh, w: nb * bw + (nb - 1) * bgap, gw: hi * c, gh: vi * c };
+  return { pos, items, w: Hz.ext[0], bh: V.ext[0], H: Hz, V };
 }
+// how many arrow rows sit above the innermost across arrow
+const rows5 = (L, ax) => L.H.ks.length - 1 - L.H.ks.findIndex(k => ax[k]);
 function axes5(L, ax, avail) {
   // every arrow starts with a badge carrying its axis number, the same number its label starts with
   const num = t => (/axis (\d)/.exec(t) || [])[1];
@@ -389,16 +402,21 @@ function axes5(L, ax, avail) {
   // a label goes to the right of its arrow, or above it when there is no room left on that side
   const side = (len, y, t) => len + 8 + t.length * 6.8 <= avail ? tx(len + 8, y + 3.5, t, 'lbl') : tx(18, y - 9, t, 'lbl');
   let s = '';
-  if (ax.b) s += A(0, -46, L.w, -46, ax.b) + tx(18, -55, ax.b, 'lbl');
-  if (ax.ha) s += A(0, -30, L.bw, -30, ax.ha) + side(L.bw, -30, ax.ha);
-  if (ax.hi) s += A(0, -14, L.gw, -14, ax.hi) + side(L.gw, -14, ax.hi);
-  if (ax.va && ax.vi) {
+  // across: the outermost axis on top, each arrow as long as one full run of its axis
+  L.H.ks.forEach((k, j) => {
+    if (!ax[k]) return;
+    const y = -14 - 16 * (L.H.ks.length - 1 - j);
+    s += A(0, y, L.H.ext[j], y, ax[k]) + side(L.H.ext[j], y, ax[k]);
+  });
+  // down: at most two labelled axes, the outermost furthest from the cells
+  const vs = L.V.ks.map((k, j) => [ax[k], L.V.ext[j]]).filter(v => v[0]);
+  if (vs.length === 2) {
     // the short arrow's label sits level with it; the long arrow's label sits lower down, where it is the only arrow left
-    s += A(-34, 0, -34, L.bh, ax.va) + tx(-46, L.gh + (L.bh - L.gh) / 2 + 4, ax.va, 'lbl', 'end');
-    s += A(-14, 0, -14, L.gh, ax.vi) + tx(-46, L.gh / 2 + 4, ax.vi, 'lbl', 'end');
-  } else if (ax.va || ax.vi) {
-    const t = ax.va || ax.vi;
-    s += A(-14, 0, -14, ax.va ? L.bh : L.gh, t) + tx(-26, 18, t, 'lbl', 'end');
+    const [[ta, bh], [ti, gh]] = vs;
+    s += A(-34, 0, -34, bh, ta) + tx(-46, gh + (bh - gh) / 2 + 4, ta, 'lbl', 'end');
+    s += A(-14, 0, -14, gh, ti) + tx(-46, gh / 2 + 4, ti, 'lbl', 'end');
+  } else if (vs.length === 1) {
+    s += A(-14, 0, -14, vs[0][1], vs[0][0]) + tx(-26, 18, vs[0][0], 'lbl', 'end');
   }
   return s;
 }
@@ -410,25 +428,29 @@ function initPatch(prefix, IH_, IW, P, c) {
     buf.push({ kind: 'i', c: ch, h, w, gh: Math.floor(h / P), ph: h % P, gw: Math.floor(w / P), pw: w % P, patch: Math.floor(h / P) * GW + Math.floor(w / P), np: NP, tag: i });
   }
   const img = new Tn(buf, [NC, IH_, IW]), cut = img.reshape([NC, GH, P, GW, P]), moved = cut.permute([1, 3, 0, 2, 4]), copy = moved.contiguous();
+  // default drawing: axis 0 as blocks side by side, axes 1 and 2 going down, axes 3 and 4 going across
+  const D5 = 'hvvhh', G5 = [bgap, mg, 0, mg, 0];
   const S = [
     { lay: new Tn(buf, [NC, 1, IH_, 1, IW]), mem: buf, dom: IH_ * IW, ml: `the memory: ${N} numbers, channel after channel`,
-      code: `img, shape (${NC}, ${IH_}, ${IW})`, names: 'img[channel, row, column]',
-      ax: { b: 'axis 0: channel', vi: 'axis 1: row', hi: 'axis 2: column' }, idx: e => `img[${e.c}, ${e.h}, ${e.w}]` },
+      code: `img, shape (${NC}, ${IH_}, ${IW})`, names: 'img[channel, row, col]',
+      ax: ['axis 0: channel', null, 'axis 1: row', null, 'axis 2: col'], idx: e => `img[${e.c}, ${e.h}, ${e.w}]` },
     { lay: cut, mem: buf, dom: IH_ * IW, ml: 'the memory: untouched',
-      code: `cut = img.reshape(${cut.shape.join(', ')})`, names: 'cut[channel, patch row, pixel row, patch col, pixel col]',
-      ax: { b: 'axis 0: channel', va: 'axis 1: patch row', vi: 'axis 2: pixel row', ha: 'axis 3: patch col', hi: 'axis 4: pixel col' }, idx: e => `cut[${e.c}, ${e.gh}, ${e.ph}, ${e.gw}, ${e.pw}]` },
-    { lay: moved, mem: buf, dom: IH_ * IW, ml: 'the memory: still untouched',
-      code: `moved = cut.permute(1, 3, 0, 2, 4), shape (${moved.shape.join(', ')})`, names: 'moved[patch row, patch col, channel, pixel row, pixel col]',
-      ax: { b: 'axis 0: patch row', va: 'axis 1: patch col', vi: 'axis 2: channel', ha: 'axis 3: pixel row', hi: 'axis 4: pixel col' }, idx: e => `moved[${e.gh}, ${e.gw}, ${e.c}, ${e.ph}, ${e.pw}]` },
+      code: `cut = img.reshape(${cut.shape.join(', ')})`, names: 'cut[channel, grid row, patch row, grid col, patch col]',
+      ax: ['axis 0: channel', 'axis 1: grid row', 'axis 2: patch row', 'axis 3: grid col', 'axis 4: patch col'], idx: e => `cut[${e.c}, ${e.gh}, ${e.ph}, ${e.gw}, ${e.pw}]` },
+    // grid row goes down and grid col across, so every patch stays where it was in the image
+    { lay: moved, dirs: 'vhvhh', gaps: [bgap, bgap, 0, mg, 0], mem: buf, dom: IH_ * IW, ml: 'the memory: still untouched',
+      code: `moved = cut.permute(1, 3, 0, 2, 4), shape (${moved.shape.join(', ')})`, names: 'moved[grid row, grid col, channel, patch row, patch col]',
+      ax: ['axis 0: grid row', 'axis 1: grid col', 'axis 2: channel', 'axis 3: patch row', 'axis 4: patch col'], idx: e => `moved[${e.gh}, ${e.gw}, ${e.c}, ${e.ph}, ${e.pw}]` },
     { lay: new Tn(copy.buf, [1, NP, 1, 1, NV]), mem: copy.buf, dom: NV, ml: 'a new strip, patch after patch: this reshape had to copy',
       code: `patches = moved.reshape(${NP}, ${NV})`, names: 'patches[patch, value]',
-      ax: { va: 'axis 0: patch', hi: 'axis 1: value' }, idx: e => `patches[${e.patch}, ${e.c * P * P + e.ph * P + e.pw}]` }
+      ax: [null, 'axis 0: patch', null, null, 'axis 1: value'], idx: e => `patches[${e.patch}, ${e.c * P * P + e.ph * P + e.pw}]` }
   ];
   // one static figure per stage; hovering a pixel in any of them lights it up in all four
   const group = S.map((st, k) => {
     const fig = document.getElementById(prefix + '-' + k), ro = $('.tl-readout', fig);
-    const top = 28 + (st.ax.b ? 60 : st.ax.ha ? 44 : 34);   // room for the arrows this stage actually has
-    const L = lay5(st.lay, c, mg, bgap), x0 = Math.round(Lm + Math.max(0, (W - Lm - L.w) / 2)), sy = top + L.bh + 46;
+    const L = lay5(st.lay, c, st.dirs || D5, st.gaps || G5);
+    const top = 28 + [34, 44, 60][rows5(L, st.ax)];   // room for the arrows this stage actually has
+    const x0 = Math.round(Lm + Math.max(0, (W - Lm - L.w) / 2)), sy = top + L.bh + 46;
     let cells = ''; L.pos.forEach((q, e) => { cells += cell(q[0], q[1], c, c, e, { tag: true }); });
     $('.tl-stage', fig).innerHTML = svg(sy + 16 + 8, DEFS + tx(W / 2, 14, st.code, 'lbl code', 'middle') +
       at(axes5(L, st.ax, W - x0) + cells, x0, top) +

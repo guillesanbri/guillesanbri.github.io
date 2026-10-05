@@ -16,11 +16,11 @@ Most tensor-based code relies on `reshape`, `transpose` or `permute` operations.
 
 The goal of this post is to build some **layout intuition** for these operations: how tensors are structured internally, why they sometimes need to be permuted or why some calls require a copy of the data and some can get away with a view of the original tensor. We will start with the basics and then we will see Grouped-Query Attention as an example.
 
-> Some figures are a tad too big, so probably the phone experience is not the best. 
+> Some figures are a tad too big, reading this on a phone is not the best experience. 
 
-> Claude has very politely made all the figures interactive so that you can hover over any cell to follow the element through the panels in the figure.
+> Claude has very politely made all the figures interactive so that you can hover over any cell to follow the element through the panels in the figures.
 
-You can click [here](#grouped-query-attention) if you want to skip to the GQA part.
+[You can click here](#grouped-query-attention) if you want to skip to the GQA part.
 
 ---
 
@@ -40,6 +40,8 @@ As you can see in the figure below, the reshape puts the first element in the fi
 This links to the concept of strides we have briefly mentioned earlier. **For a contiguous tensor** (I'm getting a bit ahead of myself here), each stride is the product of the sizes of the dimensions to its right. As an example, for `x` with shape `(4, 2, 5)`, the strides are `(10, 5, 1)`. As mentioned above, the strides tell us how many elements we have to "skip" in order to increase that axis index by one. In the case of our batch dimension, we need to skip 10 elements. The caption of the figure shows this computation for every element in the tensor. Mathematically:
 
 $$ \text{address} = i_0 \cdot s_0 + i_1 \cdot s_1 + i_2 \cdot s_2 \quad ; \quad s_k = \prod_{j > k} n_j $$
+
+> The two parts of the formula are not equally general. The address sum holds for any strided tensor, the product only gives the strides of a contiguous one.
 
 This formula is the mental model we will try to internalize, visualizing how `reshape` and `permute` change either how we group the elements or the strides of each axis.
 
@@ -105,25 +107,25 @@ The following figure shows all the possible permutations in a three-axis tensor.
 
 `(1, 0, 2)` and `(2, 1, 0)` also swap two axes, we can still use the "mirroring" visualization, but this time around elements that are not visually together in our mental layout. Instead of trying to mirror the tensor, let's try to use these as a stepping stone to more complex permutes.
 
-For the `(1, 0, 2)` case: the output shape will be `(2, 4, 5)`. We can tell by using the strides that all the blue elements will fall in a batch item and all the orange ones will fall in the other one. Another way to arrive at the same layout is to see that *we will have two batch elements instead of four, and four rows instead of two, so we need to "pick" the row with the same index from every batch element and fill each new batch element with all of them*, **all items sharing a row index in `x` will now share a batch index in `y`**. `(2, 1, 0)` is also a two-axis swap that involves the batch axis, you can try to predict the output layout.
+For the `(1, 0, 2)` case, let's read the permute as a mapping: axis 0 of `y` is axis 1 of `x`, axis 1 of `y` is axis 0 of `x`, and axis 2 stays where it was. So **all items sharing a row index in `x` will now share a batch index in `y`**: all the blue elements (row 0 in `x`) fall in the first batch element of `y`, and all the orange ones (row 1) fall in the second. Inside each new batch element, the rows are the old batch elements, so we "pick" the row with the same index from every batch element of `x` and stack them. The shape follows the same mapping, `(4, 2, 5)` becomes `(2, 4, 5)`, which is a good sanity check. `(2, 1, 0)` is also a two-axis swap that involves the batch axis, you can try to predict the output layout.
 
-Both `(1, 2, 0)` and `(2, 0, 1)` permute all three axes at the same time. Let's leave the stride arithmetic aside and use the same logic to get the layout "visually".
+Both `(1, 2, 0)` and `(2, 0, 1)` permute all three axes at the same time. Let's leave the stride arithmetic aside and use the same mapping to get the layout "visually".
 
-In the `(1, 2, 0)` case: we have two batch items now, so we know each one will group the rows that shared the same row index in `x`; we now have five rows per batch element in `y`, so each row will correspond to items that had the same column index in `x`; and finally we have four columns, where each column index now corresponds to the items that shared the same batch index before applying `permute`. The reasoning for `(2, 0, 1)` is left as an exercise for the reader.
+In the `(1, 2, 0)` case: axis 0 of `y` is axis 1 of `x`, so each batch element of `y` groups the items that shared a row index in `x` (the blue ones in one, the orange ones in the other); axis 1 of `y` is axis 2 of `x`, so each row of `y` holds the items that shared a column index in `x`; and axis 2 of `y` is axis 0 of `x`, so moving along a row of `y` walks through the old batch elements. Again, the shape `(2, 5, 4)` confirms it. The reasoning for `(2, 0, 1)` is left as an exercise for the reader.
 
 ## More dimensions: spooky
 
-For a larger number of dimensions I find it easier to try and visualize each dimension as the magnitude it denotes. Doing this makes the "row-major" intuition a bit brittle, so we have to be careful to walk the axes from right to left when flattening the memory layout to, for example, reshape the tensor.
+For a larger number of dimensions, I find it easier to stop thinking in rows and columns and **give each axis a spatial meaning**: place it where what it measures would "physically" be. Doing this makes the "row-major" intuition a bit brittle, so we have to be careful to walk the axes from right to left when flattening the memory layout to, for example, reshape the tensor.
 
 The figures below show an image being cut into patches for a ViT (without using a Conv2D op). If we take a `C, H, W = (3, 6, 6)` image and cut it into `3x3` patches, we should end up with 4 patches of $$ 3 \times 3 \times 3 = 27 $$ elements.
 
 ```python
 img.shape
-# (3, 6, 6): channel, row, column
+# (3, 6, 6): channel, row, col
 cut = img.reshape(3, 2, 3, 2, 3)
-# channel, patch row, pixel row, patch col, pixel col
+# channel, grid row, patch row, grid col, patch col
 moved = cut.permute(1, 3, 0, 2, 4)
-# patch row, patch col, channel, pixel row, pixel col
+# grid row, grid col, channel, patch row, patch col
 patches = moved.reshape(4, 27)
 # patch, value
 ```
@@ -135,23 +137,26 @@ We start with the image as three blocks, one per channel:
   <p class="tl-readout"></p>
 </figure>
 
-We `reshape` the image from `(channels, height, width)` into `(channels, patches_row, patch_height, patches_col, patch_width)`. The arrows below show what I meant by visualizing each dimension as its magnitude. Take into account that you are now working with a 5-D tensor (!).
+We `reshape` the image from `(channels, rows, cols)` into `(channels, grid_rows, patch_rows, grid_cols, patch_cols)`. The grid axes say which patch a pixel belongs to, and the patch axes say where it sits inside that patch. The figure below shows what I mean: inside each channel, the grid axes lay the patches out as a $$2 \times 2$$ grid over the image, and the patch axes lay the pixels out inside each patch, exactly where they were. Take into account that you are now working with a 5-D tensor (!).
 
 <figure class="tl-fig" id="fig-patch-1">
   <div class="tl-stage"></div>
   <p class="tl-readout"></p>
 </figure>
 
-<!-- TODO: I think this is a bit messy explanation-wise, not a fan of the rightmost stuff etc. -->
+As we saw before, the memory remains untouched: the reshape only changed the shape and the strides. Now `cut.permute(1, 3, 0, 2, 4)` reorders the axes into `(grid row, grid col, channel, patch row, patch col)`. We can place each axis in the drawing however we want: the tensor has no notion of "across" or "down". Nonetheless, we cannot forget their order (the numbers on the arrows), because that's what decides how a later `reshape` flattens them in row-major order. Going over the axes from right to left:
 
-As we saw before, the memory remains untouched, we have just recomputed the strides and changed the shape of the tensor. Now let's look at where each dimension goes when we do `cut.permute(1, 3, 0, 2, 4)`, we have to keep the arrows and axis numbers that hold the "structure" of the dimensions the same, but we can swap the dimensions freely. The right-most dimension remains the same, the patch width; the second dimension from the right is now the patch height, so we lay the whole $$3 \times 3$$ patch side by side. The third dimension from the right is now the channels dimension, so we stack each flattened patch channel on top of each other. The two dimensions left are the number of patches along both the height and the width of the original image, if we "abstract" the other three dimensions and focus on these two, we can imagine that we are looking at a $$2 \times 2$$ tensor where each element is a whole patch.
+- **Axis 4, patch col**: unchanged, three pixels side by side.
+- **Axis 3, patch row**: the three rows of a patch are now placed next to each other, so one channel of a patch becomes a single row of nine pixels.
+- **Axis 2, channel**: the three channels of the same patch are stacked on top of each other. Each patch is now a $$3 \times 9$$ block holding exactly the 27 values that will end up in its row of `patches`.
+- **Axes 0 and 1, grid row and grid col**: these only say which patch we are looking at. I placed grid row going down and grid col going across, so every patch stays where it was in the image. If we forget about the other three axes, we are looking at a $$2 \times 2$$ tensor where each element is a whole patch.
 
 <figure class="tl-fig" id="fig-patch-2">
   <div class="tl-stage"></div>
   <p class="tl-readout"></p>
 </figure>
 
-For completeness, let's apply the final reshape we would perform before the linear projection. Since we have scrambled the axes and made the tensor non-contiguous, PyTorch performs a copy of the data and reorders its internal representation before reshaping (see next section for more info on this operation). We reshape to `(patches_row * patches_col, channels * patch_height * patch_width) == (4, 27)`. We have to be careful here with the mental image, we have laid out the axes in a way that was visually convenient for us in "conceptual" terms for the patches, but when flattening the data to reorganize it the reshape follows row-major ordering. Make sure that the axes that are being merged are "neighbors" and go from slowest to fastest.
+For completeness, let's apply the final reshape we would perform before the linear projection. Since we have scrambled the axes and made the tensor non-contiguous, PyTorch performs a copy of the data and reorders its internal representation before reshaping (see next section for more info on this operation). We reshape to `(grid_rows * grid_cols, channels * patch_rows * patch_cols) == (4, 27)`. We have to be careful here with the mental image, we have laid out the axes in a way that was visually convenient for us in "conceptual" terms for the patches, but when flattening the data to reorganize it the reshape follows row-major ordering. Make sure that the axes that are being merged are "neighbors" and go from slowest to fastest.
 
 <figure class="tl-fig" id="fig-patch-3">
   <div class="tl-stage"></div>
@@ -167,11 +172,11 @@ In all the `permute` figures we have kept the memory strip at the bottom the sam
   <p class="tl-readout">Each solid line is a run of five cells read in one go. At the dot the reading jumps, and the arrowhead lands on the cell where it continues.</p>
 </figure>
 
-<!-- TODO: Rephrase the paragraph below to reflect that is either one of the two and that a view of a non contiguous tensor is legal in some cases -->
+Once again, this is what PyTorch calls a **non-contiguous** tensor: the memory order and the layout have come apart. `reshape` will work fine with a non-contiguous tensor, but `view` never copies, so it *may* raise an error: it only works if the new shape can be read from the same strip just by picking new strides. To be more precise, each new dimension of the view must either:
+- Be a subspace of a single original dimension (e.g. `unflatten`ing a dimension), or
+- Span a set of original dimensions $$ d, d+1, ..., d+k $$ that, for all $$ i = d, ..., d+k-1, $$ satisfy $$ \text{stride}[i] = \text{stride}[i+1] \times \text{shape}[i+1] $$.
 
-Once again, this is what PyTorch calls a **non-contiguous** tensor: the memory order and the layout have come apart. As we have seen, `reshape` will work fine with a non-contiguous tensor, while `view` will raise an error. This is because `reshape` creates a copy of the tensor and reorders the underlying data into a contiguous tensor if needed. To be more precise, a `view` will only work if:
-- Each new dimension is a subspace of an original dimension (e.g. `unflatten`ing a dimension).
-- The reshape covers a set of original dimensions $$ d, d+1, ..., d+k $$ that, for all $$ i = d, ..., d+k-1, $$ satisfy $$ \text{stride}[i] = \text{stride}[i+1] \times \text{shape}[i+1] $$.
+For example, `y = x.permute(1, 0, 2)` has shape `(2, 4, 5)` and strides `(5, 10, 1)`. It's non-contiguous, but `y.view(2, 2, 2, 5)` works, since it only splits the axis of size 4 into two axes with strides `(20, 10)`. `y.view(8, 5)` raises an error: it would merge the first two axes, but $$ 5 \neq 10 \times 4 $$, so no single stride can walk over both of them in order.
 
 Under the hood, `reshape` performs (if needed) a `torch.Tensor.contiguous()` which basically returns itself if already contiguous, or allocates a copy and writes the data in contiguous order. This is shown in the figure below.
 
@@ -241,7 +246,7 @@ The three projections give us one row per token: 30 values for the queries (6 he
 
 ## Splitting into heads
 
-The reshape splits those 30 values into three axes: which key/value head the query head belongs to, which of the query heads of that group it is, and the feature. Going back to our "placing the axes where they make sense spatially", here we keep the tokens going down and lay the three new axes across, from the biggest steps to the smallest: the two groups side by side (one per key/value head), the three query heads inside each group, and the five features inside each head. The keys get the same treatment, with a 1 where the queries have `q_per_kv_head`.
+The reshape splits those 30 values into three axes: which key/value head the query head belongs to, which of the query heads of that group it is, and the feature. Going back to giving each axis a spatial meaning, here we keep the tokens going down like a sequence and lay the three new axes across, from the biggest steps to the smallest: the two groups side by side (one per key/value head), the three query heads inside each group, and the five features inside each head. The keys get the same treatment, with a 1 where the queries have `q_per_kv_head`.
 
 <figure class="tl-fig" id="fig-gqa-1">
   <div class="tl-stage"></div>
@@ -250,13 +255,13 @@ The reshape splits those 30 values into three axes: which key/value head the que
 
 As we already know, it's a reshape, so nothing moved, the rows of the previous figure just got regrouped.
 
-The order of the two new axes is a decision: `(n_kv_heads, q_per_kv_head)` puts query heads 0, 1 and 2 with key/value head 0 and heads 3, 4 and 5 with key/value head 1. Writing `(q_per_kv_head, n_kv_heads)` would pair heads 0, 2 and 4 with key/value head 0 (both are valid architectures: interleaved vs tiled, be careful if loading weights).
+The order of the two new axes is a decision: `(n_kv_heads, q_per_kv_head)` puts query heads 0, 1 and 2 with key/value head 0 and heads 3, 4 and 5 with key/value head 1. Writing `(q_per_kv_head, n_kv_heads)` would pair heads 0, 2 and 4 with key/value head 0 (both are valid conventions for the same architecture: interleaved vs tiled, be careful if loading weights).
 
 ## Preparing for the matmuls
 
 `permute(0, 2, 3, 1, 4)` keeps the batch at the front and takes the token axis all the way to the back, next to the features. As we will see in the next subsection, this allows for batched matrix multiplication of queries and keys.
 
-The drawing doesn't need to change at all, this time we change the numbers in the arrows (the axis index of each magnitude). As we have seen in the first half of the post, this matters for reshaping, but we can lay them down visually however we want.
+The drawing doesn't need to change at all, this time we change the numbers in the arrows (the axis index on each arrow). As we have seen in the first half of the post, this matters for reshaping, but we can lay them down visually however we want.
 
 <figure class="tl-fig" id="fig-gqa-2">
   <div class="tl-stage"></div>
@@ -316,10 +321,10 @@ In this case for example, the first row holds head 0 for all four tokens followe
 # Summary
 
 - A tensor is **a 1D array plus a header**. The header holds the shape and the strides, and the address of an element is $$ \sum{\text{index}_i \cdot \text{stride}_i} $$.
-- `reshape` and `view` **regroup elements**. They merge or split axes that are already neighbors and don't change the memory order unless `reshape` performs a `contiguous` under the hood.
+- `reshape` and `view` **regroup elements**. Any shape with the same number of elements works (read in row-major order), but the result only keeps its meaning if we merge or split neighboring axes in order. They don't change the memory order unless `reshape` performs a `contiguous` under the hood.
 - `permute` and `transpose` **reorder axes**. They shuffle shape and strides together but don't move anything.
 - `contiguous` **moves numbers**. We need it between a permute and a `view`, `reshape` does it when needed.
-- With many axes forget about rows and columns and **name every axis by what it measures**, try to give it meaning spatially and check their order before reshaping.
+- With many axes forget about rows and columns, **name every axis by what it measures**, **give it a spatial meaning**, and check their order before reshaping.
 
 ---
 
