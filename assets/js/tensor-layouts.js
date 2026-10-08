@@ -10,6 +10,9 @@ const AX = {
   d: { n: D, name: 'feature', s: 'f' }
 };
 
+/* ---------- look: riso inks by default; ?figs=classic brings back the original OKLCH shades and styling ---------- */
+const PR = (() => { try { return new URLSearchParams(location.search).get('figs') !== 'classic'; } catch (err) { return true; } })();
+
 /* ---------- colour: hue = head, lightness = token (OKLCH -> sRGB) ---------- */
 const LV = [0.905, 0.81, 0.695, 0.56], CV = [0.085, 0.13, 0.16, 0.17];
 const KH = [255, 62];                      // key/value heads: blue, orange
@@ -35,7 +38,20 @@ function hex(L, C, h) {
 const memo = {};
 const IH = [25, 145, 255];                  // image channels: red, green, blue
 function hueOf(e) { return e.kind === 'k' ? KH[e.head] : QH[e.head]; }
+/* print: riso inks laid on the page as halftone tints, so the shade is how much ink, not how dark the ink is */
+const INK = { k: ['#0078BF', '#FF6C2F'], q: ['#00A95C', '#00838A', '#765BA7', '#FF48B0', '#F15060', '#FFB511'], i: ['#F15060', '#00A95C', '#0078BF'] };
+const PAGE = [250, 250, 250], TINT = [0.2, 0.42, 0.68, 1];
+const plate = e => e.kind === 'i' ? INK.i[e.c] : INK[e.kind][e.head];
+function inked(ink, t) {
+  const rgb = [1, 3, 5].map((i, k) => PAGE[k] * (1 - t + t * parseInt(ink.slice(i, i + 2), 16) / 255));
+  const lum = rgb.reduce((s, v, k) => s + [0.2126, 0.7152, 0.0722][k] * Math.pow(v / 255, 2.2), 0);
+  return ['#' + rgb.map(v => Math.round(v).toString(16).padStart(2, '0')).join(''), lum < 0.2];
+}
 function color(e) {
+  if (PR) {
+    const k = 'p' + plate(e) + (e.kind === 'i' ? e.patch + '_' + e.np : e.tok);
+    return memo[k] || (memo[k] = inked(plate(e), e.kind === 'i' ? 0.2 + 0.8 * e.patch / (e.np - 1) : TINT[e.tok]));
+  }
   if (e.kind === 'i') {                     // image pixel: hue = channel, shade = which patch it belongs to
     const u = e.patch / (e.np - 1), k = 'i' + e.c + '_' + e.patch + '_' + e.np, L = 0.93 - 0.364 * u;   // patches run light to dark
     return [memo[k] || (memo[k] = hex(L, 0.055 + 0.112 * u, IH[e.c])), L < 0.64];
@@ -86,16 +102,22 @@ function mk(kind, names) {
 }
 
 /* ---------- SVG primitives ---------- */
-const DEFS = '<defs><marker id="arr" viewBox="0 0 8 8" refX="6.5" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M1.5,1.2L6.8,4L1.5,6.8" class="ah"/></marker></defs>';
-const tx = (x, y, t, cls, a) => `<text x="${x}" y="${y}" class="${cls || 'lbl'}" text-anchor="${a || 'start'}">${t}</text>`;
+const DEFS = '<defs><marker id="arr" viewBox="0 0 8 8" refX="6.5" refY="4" markerWidth="7" markerHeight="7" orient="auto">' +
+  (PR ? '<path d="M0.8,1.6L7.2,4L0.8,6.4Z" class="ah"/>' : '<path d="M1.5,1.2L6.8,4L1.5,6.8" class="ah"/>') + '</marker></defs>';
+// `backticks` mark the code inside a label that is otherwise words; the print look sets the words in the text font
+const tx = (x, y, t, cls, a) => {
+  t = String(t); cls = cls || 'lbl';
+  if (t.includes('`')) { if (!/\btxt\b/.test(cls)) cls += ' txt'; t = PR ? t.replace(/`([^`]*)`/g, '<tspan class="cd">$1</tspan>') : t.replace(/`/g, ''); }
+  return `<text x="${x}" y="${y}" class="${cls}" text-anchor="${a || 'start'}">${t}</text>`;
+};
 const at = (g, x, y) => `<g transform="translate(${x},${y})">${g.s !== undefined ? g.s : g}</g>`;
-const svg = (h, inner, w, label) => `<svg viewBox="0 0 ${w || W} ${h}" role="img" aria-label="${label || 'figure'}" style="min-width:${Math.min(w || W, 600)}px;max-width:${w || W}px">${inner}</svg>`;
+const svg = (h, inner, w, label) => `<svg viewBox="0 0 ${w || W} ${h}" role="img" aria-label="${(label || 'figure').replace(/`/g, '')}" style="min-width:${Math.min(w || W, 600)}px;max-width:${w || W}px">${inner}</svg>`;
 
 function cell(x, y, w, h, e, o) {
   o = o || {};
   const [fill, dk] = color(e);
   return `<g class="cell${o.ghost ? ' ghost' : ''}" data-el="${key(e)}" data-v="${vkey(e)}" data-tag="${e.tag}">` +
-    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${Math.min(2.5, w / 4)}" fill="${fill}"/>` +
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}"${PR ? '' : ` rx="${Math.min(2.5, w / 4)}"`} fill="${fill}"/>` +
     (o.tag ? `<text x="${x + w / 2}" y="${y + h / 2 + 0.5}" class="tag ${dk ? 'tw' : 'tb'}">${e.tag}</text>` : '') + '</g>';
 }
 
@@ -296,7 +318,7 @@ function figMirror() {
     tx(rcx, y0 - 16, 'A.T, shape (5, 4), strides (1, 5)', 'lbl code', 'middle') + at(gb, bx, y0) +
     `<path class="mir" d="M${bx - 10},${y0 - 10}L${bx + 4 * c + 14},${y0 + 4 * c + 14}"/>` +
     `<path class="rp" d="M${ax + ga.w + 28},${y0 + 52}H${bx - 44}" marker-end="url(#arr)"/>` +
-    tx(W / 2, sy - 10, 'the memory, shared by A and A.T', 'lbl code', 'middle') + at(st, (W - st.w) / 2, sy);
+    tx(W / 2, sy - 10, 'the memory, shared by `A` and `A.T`', 'lbl code txt', 'middle') + at(st, (W - st.w) / 2, sy);
   return svg(sy + sc + 10, s, W, 'A matrix and its transpose over the same strip of memory');
 }
 
@@ -325,7 +347,7 @@ function initPerm3() {
   stage.innerHTML = svg(sy + 18 + 8,
     tx(W / 2, 14, 'x, shape (4, 2, 5), strides (10, 5, 1)', 'lbl code', 'middle') + at(grid(x, { c, gap, vn: 'x' }), x0, xTop) +
     `<text class="lbl code ylab" x="${W / 2}" y="${yTop - 10}" text-anchor="middle"></text><g class="fr"></g><g class="mvs">${cells}</g>` +
-    tx(W / 2, sy - 10, 'the memory, shared by x and y', 'lbl code', 'middle') + at(st, 0, sy), W, 'x and a permuted view of it, drawn as blocks of rows');
+    tx(W / 2, sy - 10, 'the memory, shared by `x` and `y`', 'lbl code txt', 'middle') + at(st, 0, sy), W, 'x and a permuted view of it, drawn as blocks of rows');
   const mvs = [...fig.querySelectorAll('.mv')], fr = $('.fr', fig), ylab = $('.ylab', fig);
   const HINT = ['the shade', 'the hue', 'the place inside a run of five'];
   let p = [0, 1, 2], raf = 0;
@@ -400,7 +422,7 @@ function axes5(L, ax, avail) {
     return `<path class="rp" d="M${x1},${y1}L${x2},${y2}" marker-end="url(#arr)"/><g class="rb"><circle cx="${bx}" cy="${by}" r="7"/><text x="${bx}" y="${by + 0.5}">${num(t)}</text></g>`;
   };
   // a label goes to the right of its arrow, or above it when there is no room left on that side
-  const side = (len, y, t) => len + 8 + t.length * 6.8 <= avail ? tx(len + 8, y + 3.5, t, 'lbl') : tx(18, y - 9, t, 'lbl');
+  const side = (len, y, t) => len + 8 + t.length * 6.8 <= avail ? tx(len + 8, y + 3.5, t, 'lbl txt') : tx(18, y - 9, t, 'lbl txt');
   let s = '';
   // across: the outermost axis on top, each arrow as long as one full run of its axis
   L.H.ks.forEach((k, j) => {
@@ -413,10 +435,10 @@ function axes5(L, ax, avail) {
   if (vs.length === 2) {
     // the short arrow's label sits level with it; the long arrow's label sits lower down, where it is the only arrow left
     const [[ta, bh], [ti, gh]] = vs;
-    s += A(-34, 0, -34, bh, ta) + tx(-46, gh + (bh - gh) / 2 + 4, ta, 'lbl', 'end');
-    s += A(-14, 0, -14, gh, ti) + tx(-46, gh / 2 + 4, ti, 'lbl', 'end');
+    s += A(-34, 0, -34, bh, ta) + tx(-46, gh + (bh - gh) / 2 + 4, ta, 'lbl txt', 'end');
+    s += A(-14, 0, -14, gh, ti) + tx(-46, gh / 2 + 4, ti, 'lbl txt', 'end');
   } else if (vs.length === 1) {
-    s += A(-14, 0, -14, vs[0][1], vs[0][0]) + tx(-26, 18, vs[0][0], 'lbl', 'end');
+    s += A(-14, 0, -14, vs[0][1], vs[0][0]) + tx(-26, 18, vs[0][0], 'lbl txt', 'end');
   }
   return s;
 }
@@ -454,7 +476,7 @@ function initPatch(prefix, IH_, IW, P, c) {
     let cells = ''; L.pos.forEach((q, e) => { cells += cell(q[0], q[1], c, c, e, { tag: true }); });
     $('.tl-stage', fig).innerHTML = svg(sy + 16 + 8, DEFS + tx(W / 2, 14, st.code, 'lbl code', 'middle') +
       at(axes5(L, st.ax, W - x0) + cells, x0, top) +
-      tx(W / 2, sy - 10, st.ml, 'lbl code', 'middle') + at(strip(st.mem, { c: W / N, h: 16, tag: false, dom: st.dom }), 0, sy), W, st.code);
+      tx(W / 2, sy - 10, st.ml, 'lbl code txt', 'middle') + at(strip(st.mem, { c: W / N, h: 16, tag: false, dom: st.dom }), 0, sy), W, st.code);
     return { fig, ro, st, rest: `<code>${st.names}</code>` };
   });
   const clear = () => group.forEach(g => {
@@ -482,7 +504,7 @@ function figRead() {
   const x = mk('k', ['T', 'G', 'd']), y = x.permute([1, 0, 2]), g = grid(y, { c: 22, vn: 'y' }), rp = readPath(y.order(), 18), st = strip(x.buf, { c: 18 });
   const gy = 24, sy = gy + g.h + 14 + rp.up;
   const s = DEFS + tx(W / 2, 14, `y = x.permute(1, 0, 2), shape (${y.shape.join(', ')}), strides (${y.strides.join(', ')})`, 'lbl code', 'middle') +
-    at(g, (W - g.w) / 2 + 6, gy) + at({ s: rp.s + st.s }, 0, sy) + tx(W / 2, sy + 18 + 16, 'the memory, and the path y takes over it', 'lbl code', 'middle');
+    at(g, (W - g.w) / 2 + 6, gy) + at({ s: rp.s + st.s }, 0, sy) + tx(W / 2, sy + 18 + 16, 'the memory, and the path `y` takes over it', 'lbl code txt', 'middle');
   return svg(sy + 18 + 26, s, W, 'The path a permuted view takes over the strip of memory');
 }
 
@@ -490,9 +512,9 @@ function figRead() {
 function figContig() {
   const x = mk('k', ['T', 'G', 'd']), y = x.permute([1, 0, 2]), yc = y.contiguous(), c = 18;
   const s1 = strip(x.buf, { c }), s2 = strip(yc.buf, { c, brackets: [20, 5] }), y1 = 24, y2 = y1 + 18 + 74;
-  const s = tx(W / 2, 14, 'y, strides (5, 10, 1): the old strip', 'lbl code', 'middle') + at(s1, 0, y1) +
+  const s = tx(W / 2, 14, '`y, strides (5, 10, 1)`: the old strip', 'lbl code', 'middle') + at(s1, 0, y1) +
     at(braid(x.buf, yc.buf, c, y1 + 19, y2 - 1), 0, 0) + at(s2, 0, y2) +
-    tx(W / 2, y2 + s2.h + 14, 'y.contiguous(), strides (20, 5, 1): a new strip, written in the order y reads', 'lbl code', 'middle');
+    tx(W / 2, y2 + s2.h + 14, '`y.contiguous(), strides (20, 5, 1)`: a new strip, written in the order `y` reads', 'lbl code', 'middle');
   return svg(y2 + s2.h + 24, s, W, 'contiguous copies the strip into reading order');
 }
 
@@ -604,19 +626,19 @@ function axesG(L, labels, avail) {
   L.H.ks.forEach((k, j) => {
     const last = j === L.H.ks.length - 1, x1 = last ? L.H.off : 0, len = Math.max(last ? L.H.run : L.H.ext[j], 22), x2 = x1 + len;
     const t = labels[k], y = -14 - 16 * (L.H.ks.length - 1 - j);
-    s += A(x1, y, x2, y, t) + (x2 + 8 + t.length * 6.8 <= avail ? tx(x2 + 8, y + 3.5, t, 'lbl') : tx(x1 + 18, y - 9, t, 'lbl'));
+    s += A(x1, y, x2, y, t) + (x2 + 8 + t.length * 6.8 <= avail ? tx(x2 + 8, y + 3.5, t, 'lbl txt') : tx(x1 + 18, y - 9, t, 'lbl txt'));
   });
   // down: one arrow per axis, the outermost furthest from the cells
   L.V.ks.forEach((k, j) => {
     const t = labels[k], x = -14 - 20 * (L.V.ks.length - 1 - j), len = Math.max(L.V.ext[j], 24);
-    s += A(x, 0, x, len, t) + tx(-26 - 20 * (L.V.ks.length - 1), 18 + 16 * j, t, 'lbl', 'end');
+    s += A(x, 0, x, len, t) + tx(-26 - 20 * (L.V.ks.length - 1), 18 + 16 * j, t, 'lbl txt', 'end');
   });
   return s;
 }
 function initGQA() {
   if (!document.getElementById('fig-gqa-0')) return;
   const c = 12, mg = 6, Lm = 172, NQ = T * H * D;
-  const AXN = { T: 'T', kv: 'n_kv_heads', qp: 'q_per_kv_head', d: 'd_head' };
+  const AXN = { T: '`T`', kv: '`n_kv_heads`', qp: '`q_per_kv_head`', d: '`d_head`' };
   // queries: memory as the projection writes it (token, head, feature); head h belongs to kv head h // R, at place h % R
   const q0 = mk('q', ['T', 'H', 'd']), k0 = mk('k', ['T', 'G', 'd']);
   const qs = new Tn(q0.buf, [1, T, G, R, D]), ks = new Tn(k0.buf, [1, T, G, 1, D]);          // after the reshape
@@ -627,7 +649,7 @@ function initGQA() {
   // output: fresh from the matmul, so its memory is (kv head, place in group, token, feature) = head after head
   const o0 = mk('q', ['H', 'T', 'd']), ob = new Tn(o0.buf, [1, G, R, T, D]), om = ob.permute([0, 3, 1, 2, 4]), oc = om.contiguous();
   const ax4 = (a, b, cc, d) => ['axis 1: ' + a, 'axis 2: ' + b, 'axis 3: ' + cc, 'axis 4: ' + d];
-  const ax2 = v => ['axis 1: T', 'axis 2: ' + v];
+  const ax2 = v => ['axis 1: `T`', 'axis 2: `' + v + '`'];
   const scell = it => {
     const a = it.e, eq = qp.at([0, a.g, a.j, a.i, 0]), ek = kp.at([0, a.g, 0, a.s, 0]), x = it.x, y = it.y;
     return `<g class="cell sc" data-s="${a.g},${a.j},${a.i},${a.s}" data-links="${vkey(eq)} ${vkey(ek)}"><path d="M${x},${y}h${c}L${x},${y + c}Z" fill="${color(eq)[0]}"/><path d="M${x + c},${y}v${c}h${-c}Z" fill="${color(ek)[0]}"/><rect x="${x}" y="${y}" width="${c}" height="${c}" fill="none"/></g>`;
@@ -638,28 +660,28 @@ function initGQA() {
       { lay: new Tn(k0.buf, [1, T, G * D]), dirs: 'vh', ax: ax2('n_kv_heads * d_head'), code: 'k = wk(x)', shape: '(B, 4, 10)' }] },
     { names: 'q[B, T, n_kv_heads, q_per_kv_head, d_head]', panels: [
       { lay: qs, dirs: 'vhhh', ax: ax4(AXN.T, AXN.kv, AXN.qp, AXN.d), code: 'q = q.reshape(B, T, n_kv_heads, q_per_kv_head, d_head)', shape: '(B, 4, 2, 3, 5)' },
-      { lay: ks, dirs: 'vhhh', ax: ax4(AXN.T, AXN.kv, '1', AXN.d), code: 'k = k.reshape(B, T, n_kv_heads, 1, d_head)', shape: '(B, 4, 2, 1, 5)' }] },
+      { lay: ks, dirs: 'vhhh', ax: ax4(AXN.T, AXN.kv, '`1`', AXN.d), code: 'k = k.reshape(B, T, n_kv_heads, 1, d_head)', shape: '(B, 4, 2, 1, 5)' }] },
     { names: 'q[B, n_kv_heads, q_per_kv_head, T, d_head]', panels: [
       { lay: qp, dirs: 'hhvh', ax: ax4(AXN.kv, AXN.qp, AXN.T, AXN.d), code: 'q = q.permute(0, 2, 3, 1, 4)', shape: '(B, 2, 3, 4, 5)' },
-      { lay: kp, dirs: 'hhvh', ax: ax4(AXN.kv, '1', AXN.T, AXN.d), code: 'k = k.permute(0, 2, 3, 1, 4)', shape: '(B, 2, 1, 4, 5)' }] },
+      { lay: kp, dirs: 'hhvh', ax: ax4(AXN.kv, '`1`', AXN.T, AXN.d), code: 'k = k.permute(0, 2, 3, 1, 4)', shape: '(B, 2, 1, 4, 5)' }] },
     { names: 'att[B, n_kv_heads, q_per_kv_head, T, T]', panels: [
       { lay: qp, dirs: 'hhvh', ax: ax4(AXN.kv, AXN.qp, AXN.T, AXN.d), code: 'q', shape: '(B, 2, 3, 4, 5)' },
-      { lay: kb, dirs: 'hhvh', pad: 5 * c, ghost: it => it.idx[2] > 0, ax: ax4(AXN.kv, '1, read 3×', AXN.d, AXN.T), code: 'k.transpose(-2, -1): the dotted copies are the same matrix read again', shape: '(B, 2, 1, 5, 4), used as (B, 2, 3, 5, 4)' },
-      { lay: new Tn(att, [1, G, R, T, T]), dirs: 'hhvh', pad: 5 * c, cellFn: scell, ax: ax4(AXN.kv, AXN.qp, 'T (asking)', 'T (looked at)'), code: 'att = q @ k.transpose(-2, -1)', shape: '(B, 2, 3, 4, 4)' }] },
-    { names: 'out[B, T, n_kv_heads, q_per_kv_head, d_head]', strip: [o0.buf, 'the memory of out: head after head, untouched by the permute'], panels: [
+      { lay: kb, dirs: 'hhvh', pad: 5 * c, ghost: it => it.idx[2] > 0, ax: ax4(AXN.kv, '`1`, read 3×', AXN.d, AXN.T), code: '`k.transpose(-2, -1)`: the dotted copies are the same matrix read again', shape: '`(B, 2, 1, 5, 4)`, used as `(B, 2, 3, 5, 4)`' },
+      { lay: new Tn(att, [1, G, R, T, T]), dirs: 'hhvh', pad: 5 * c, cellFn: scell, ax: ax4(AXN.kv, AXN.qp, '`T` (asking)', '`T` (looked at)'), code: 'att = q @ k.transpose(-2, -1)', shape: '(B, 2, 3, 4, 4)' }] },
+    { names: 'out[B, T, n_kv_heads, q_per_kv_head, d_head]', strip: [o0.buf, 'the memory of `out`: head after head, untouched by the permute'], panels: [
       { lay: om, dirs: 'vhhh', ax: ax4(AXN.T, AXN.kv, AXN.qp, AXN.d), code: 'out = out.permute(0, 3, 1, 2, 4)', shape: '(B, 4, 2, 3, 5)' }] },
     { ribbons: true },
     { names: 'out[B, T, n_heads * d_head]', strip: [oc.buf, 'a new strip, token after token: this reshape had to copy'], panels: [
       { lay: new Tn(oc.buf, [1, T, H * D]), dirs: 'vh', ax: ax2('n_heads * d_head'), code: 'out = out.reshape(B, T, n_heads * d_head)', shape: '(B, 4, 30)' }] },
     { names: 'out[B, T, n_heads * d_head]', strip: [o0.buf, 'the same strip as before, cut every 30 numbers'], panels: [
-      { lay: new Tn(o0.buf, [1, T, H * D]), dirs: 'vh', ax: ax2('n_heads * d_head'), code: 'out.reshape(B, T, n_heads * d_head), without the permute', shape: '(B, 4, 30)' }] }
+      { lay: new Tn(o0.buf, [1, T, H * D]), dirs: 'vh', ax: ax2('n_heads * d_head'), code: '`out.reshape(B, T, n_heads * d_head)`, without the permute', shape: '(B, 4, 30)' }] }
   ];
   const group = F.map((fg, k) => {
     const fig = document.getElementById('fig-gqa-' + k), ro = $('.tl-readout', fig);
     if (fg.ribbons) {     // the copy made by the last reshape: every vector of five numbers goes from the old strip to the new one
       const cs = W / NQ, s1 = strip(o0.buf, { c: cs, h: 18, tag: false, dom: D }), s2 = strip(oc.buf, { c: cs, h: 18, tag: false, dom: D, brackets: [H * D] }), y1 = 26, y2 = y1 + 18 + 96;
-      $('.tl-stage', fig).innerHTML = svg(y2 + s2.h + 24, tx(0, 14, 'out as the matmul left it: memory is head after head', 'lbl code') + at(s1, 0, y1) +
-        at(braid(o0.buf, oc.buf, cs, y1 + 19, y2 - 1), 0, 0) + at(s2, 0, y2) + tx(0, y2 + s2.h + 14, 'what the reshape writes down: memory is now token after token', 'lbl code'), W, 'The copy made by the last reshape');
+      $('.tl-stage', fig).innerHTML = svg(y2 + s2.h + 24, tx(0, 14, '`out` as the matmul left it: memory is head after head', 'lbl code txt') + at(s1, 0, y1) +
+        at(braid(o0.buf, oc.buf, cs, y1 + 19, y2 - 1), 0, 0) + at(s2, 0, y2) + tx(0, y2 + s2.h + 14, 'what the reshape writes down: memory is now token after token', 'lbl code txt'), W, 'The copy made by the last reshape');
       return { fig, ro, rest: '' };
     }
     const Ls = fg.panels.map(p => layG(p.lay, c, p.dirs, mg, p.pad)), x0 = Lm;   // every block starts at the same x, so queries and keys line up
@@ -671,7 +693,7 @@ function initGQA() {
       y = by + Math.max(L.bh, 24) + 22;
     });
     s = DEFS + `<g class="ctr">${s}</g>`;
-    if (fg.strip) { s += tx(W / 2, y + 12, fg.strip[1], 'lbl code', 'middle') + at(strip(fg.strip[0], { c: W / NQ, h: 16, tag: false, dom: D }), 0, y + 22); y += 22 + 16 + 8; }
+    if (fg.strip) { s += tx(W / 2, y + 12, fg.strip[1], 'lbl code txt', 'middle') + at(strip(fg.strip[0], { c: W / NQ, h: 16, tag: false, dom: D }), 0, y + 22); y += 22 + 16 + 8; }
     $('.tl-stage', fig).innerHTML = svg(y, s, W, fg.panels.map(p => p.code).join('; '));
     // labels on the left have different widths in every figure, so measure what was drawn and centre it
     try { const g = fig.querySelector('.ctr'), bb = g.getBBox(); g.setAttribute('transform', `translate(${((W - bb.width) / 2 - bb.x).toFixed(1)},0)`); } catch (err) { /* not rendered: keep the default position */ }
@@ -712,7 +734,7 @@ function legend() {
   el.innerHTML =
     `<div><span class="lg">key heads</span>${[0, 1].map(g => `<span class="grp">${sw('k', g)}<em>g${g}</em></span>`).join('')}</div>` +
     `<div><span class="lg">query heads</span>${[0, 1, 2, 3, 4, 5].map(h => `<span class="grp">${sw('q', h)}<em>h${h}</em></span>`).join('')}</div>` +
-    `<div><span class="lg">tokens</span><span class="grp">${[0, 1, 2, 3].map(t => `<span class="sw" style="background:${hex(LV[t], 0, 0)}"></span>`).join('')}<em>t0 to t3, light to dark</em></span></div>`;
+    `<div><span class="lg">tokens</span><span class="grp">${[0, 1, 2, 3].map(t => `<span class="sw" style="background:${PR ? inked('#222222', TINT[t])[0] : hex(LV[t], 0, 0)}"></span>`).join('')}<em>t0 to t3, ${PR ? 'less to more ink' : 'light to dark'}</em></span></div>`;
 }
 function hero() {
   const el = document.getElementById('hero-strip'); if (!el) return;
@@ -722,6 +744,7 @@ function hero() {
 
 /* ---------- boot ---------- */
 function boot() {
+  if (PR) document.querySelectorAll('.tl-fig').forEach(f => f.classList.add('tl-print'));
   legend();
   mount('fig-hook', figHook, { plain: 'x' });
   mount('fig-strip', figStrip, { hover: hoverStrip });

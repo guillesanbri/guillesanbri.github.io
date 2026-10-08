@@ -56,3 +56,25 @@
 .tl-fig.hov .rib{opacity:.1}
 .tl-fig.hov .rib.von,.tl-fig.hov .rib.on{opacity:.8}
 .tl-fig.hov .cell.on rect{stroke:var(--ink);stroke-width:1.6}
+
+/* ---------- look: print, the default (?figs=classic turns it off): riso inks; labels that are words use the text font, code stays mono ---------- */
+.tl-fig.tl-print .lbl.txt{font-family:inherit;font-size:13px}
+.tl-fig.tl-print .lbl.sm.txt{font-size:11px}
+.tl-fig.tl-print .lbl .cd{font-family:var(--mono);font-size:.88em}
+.tl-fig.tl-print .tag{font-family:inherit;font-size:10px;font-weight:600;font-variant-numeric:tabular-nums}
+.tl-fig.tl-print .rp{stroke-width:.9}
+.tl-fig.tl-print .ah{fill:var(--ink);stroke:none}
+.tl-fig.tl-print .rb circle{fill:var(--paper);stroke:var(--ink);stroke-width:.8}
+.tl-fig.tl-print .rb text{fill:var(--ink)}
+.tl-fig.tl-print .brk{stroke:var(--ink-2);stroke-width:.8}
+.tl-fig.tl-print .rpj{stroke-dasharray:2 2.5}
+.tl-fig.tl-print .rib{opacity:.6;mix-blend-mode:multiply}
+.tl-fig.tl-print.hov .rib{opacity:.12}
+.tl-fig.tl-print.hov .rib.von,.tl-fig.tl-print.hov .rib.on{opacity:.85}
+.tl-fig.tl-print .tl-controls{gap:0;margin-bottom:20px}
+.tl-fig.tl-print .tl-controls button{color:var(--ink-2);background:transparent;border:0;border-bottom:1px solid var(--rule);border-radius:0;padding:8px 11px}
+.tl-fig.tl-print .tl-controls button:hover{color:var(--ink);border-color:var(--ink-3)}
+.tl-fig.tl-print .tl-controls button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.tl-fig.tl-print .tl-controls button[data-replay]{border-style:none none dashed;margin-left:10px}
+.tl-fig.tl-print .tl-readout{text-align:left;padding-top:10px;border-top:1px solid var(--rule)}
+.tl-fig.tl-legend.tl-print .sw{width:16px;height:16px;border-radius:0 !important}
